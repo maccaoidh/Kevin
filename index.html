@@ -643,7 +643,7 @@ async function submitCheckin(){
   const dow=new Date().getDay();
   const msg=`Morning check-in. Oura: readiness ${r||'?'}, sleep score ${ss||'?'}, total sleep ${st||'?'}, REM ${rem||'?'}, HRV ${hrv||'?'}, resting HR ${rhr||'?'}. Feeling: ${selFl||'not stated'}. Today is ${DAYS[dow]}, Phase ${getPhase()}. Give a 3-4 sentence honest assessment and how hard to push today.`;
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SP,messages:[{role:'user',content:msg}]})});
+    const res=await fetch('https://gateway.ai.cloudflare.com/v1/2015852c4f5dccf18dc513507224c245/kevin/anthropic/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','x-api-key':'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'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SP,messages:[{role:'user',content:msg}]})});
     const data=await res.json();
     const reply=data.content?.find(b=>b.type==='text')?.text||'Unable to get response.';
     const metrics=[];
@@ -682,7 +682,7 @@ async function sendChat(){
   addMsg('user',text);chatHist.push({role:'user',content:text});
   addTyping();
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SP,messages:chatHist})});
+    const res=await fetch('https://gateway.ai.cloudflare.com/v1/2015852c4f5dccf18dc513507224c245/kevin/anthropic/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','x-api-key':'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'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SP,messages:chatHist})});
     const data=await res.json();
     const reply=data.content?.find(b=>b.type==='text')?.text||'Something went wrong.';
     rmTyping();addMsg('assistant',reply);chatHist.push({role:'assistant',content:reply});
