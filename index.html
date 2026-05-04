@@ -587,7 +587,7 @@ async function fetchOura(){
   const status=document.getElementById('oura-fetch-status');
   btn.disabled=true;btn.textContent='Fetching from Oura...';
   status.style.display='block';status.textContent='Connecting to Oura Ring...';
-  const token='PCCQG7BPCTG76KMZJD6JI24IGGEJKMEU';
+  const token='H6SU7O4XVBK5MYC2FN2NFSKN6UL27VHE';
   const today=new Date();
   const end=today.toISOString().split('T')[0];
   const start=new Date(today-3*24*60*60*1000).toISOString().split('T')[0];
@@ -643,7 +643,7 @@ async function submitCheckin(){
   const dow=new Date().getDay();
   const msg=`Morning check-in. Oura: readiness ${r||'?'}, sleep score ${ss||'?'}, total sleep ${st||'?'}, REM ${rem||'?'}, HRV ${hrv||'?'}, resting HR ${rhr||'?'}. Feeling: ${selFl||'not stated'}. Today is ${DAYS[dow]}, Phase ${getPhase()}. Give a 3-4 sentence honest assessment and how hard to push today.`;
   try{
-    const res=await fetch('https://gateway.ai.cloudflare.com/v1/2015852c4f5dccf18dc513507224c245/kevin/anthropic/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','x-api-key':'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'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SP,messages:[{role:'user',content:msg}]})});
+    const res=await fetch('https://gateway.ai.cloudflare.com/v1/2015852c4f5dccf18dc513507224c245/kevin/anthropic/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','x-api-key':'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'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SP,messages:[{role:'user',content:msg}]})});
     const data=await res.json();
     const reply=data.content?.find(b=>b.type==='text')?.text||'Unable to get response.';
     const metrics=[];
