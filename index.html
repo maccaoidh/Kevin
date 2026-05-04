@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kevin">
+<meta name="theme-color" content="#0a1628">
+<title>Kevin — Your Fitness Coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0a1628;--bg2:#111f38;--bg3:#172540;--accent:#1fd48a;--accent2:#0fb872;--text:#e8f0fe;--text2:#8fa8c8;--text3:#4a6080;--card:#131e32;--border:rgba(31,212,138,0.15);--danger:#ff6b6b;--warn:#ffa94d;--radius:16px;--font-display:'DM Serif Display',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;-webkit-font-smoothing:antialiased}
+#app{height:100vh;height:100dvh;display:flex;flex-direction:column;max-width:430px;margin:0 auto;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .25s;overflow:hidden}
+.screen.active{opacity:1;pointer-events:all}
+.nav{display:flex;background:var(--bg2);border-top:.5px solid var(--border);padding:6px 0 max(6px,env(safe-area-inset-bottom));flex-shrink:0;z-index:10}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;background:none;border:none;cursor:pointer;color:var(--text3);font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:.03em;transition:color .15s}
+.nav-btn.active{color:var(--accent)}
+.nav-btn svg{width:22px;height:22px}
+.header{padding:16px 20px 12px;padding-top:max(16px,env(safe-area-inset-top));flex-shrink:0;background:var(--bg)}
+.header-row{display:flex;align-items:center;justify-content:space-between}
+.header-title{font-family:var(--font-display);font-size:26px;color:var(--text)}
+.header-sub{font-size:12px;color:var(--text2);margin-top:2px;font-weight:300}
+.kevin-badge{display:flex;align-items:center;gap:6px;background:var(--bg3);border:.5px solid var(--border);border-radius:20px;padding:4px 10px 4px 6px}
+.kevin-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:breathe 2.5s ease-in-out infinite}
+.kevin-name{font-size:12px;color:var(--accent);font-weight:500}
+@keyframes breathe{0%,100%{opacity:.5;transform:scale(.85)}50%{opacity:1;transform:scale(1)}}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 20px 16px}
+.scroll::-webkit-scrollbar{display:none}
+.card{background:var(--card);border:.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.card-label{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.day-type{display:inline-flex;align-items:center;gap:6px;background:rgba(31,212,138,.1);border:.5px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--accent);font-weight:500;margin-bottom:16px}
+.workout-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:.5px solid rgba(255,255,255,.05)}
+.workout-row:last-child{border-bottom:none}
+.ex-name{font-size:14px;color:var(--text)}
+.ex-sets{font-size:12px;color:var(--accent);font-weight:500}
+.ex-setup-btn{font-size:10px;color:var(--text3);background:var(--bg3);border:.5px solid var(--border);border-radius:8px;padding:3px 8px;cursor:pointer;font-family:var(--font-body);margin-left:8px;white-space:nowrap;transition:color .15s,border-color .15s}
+.ex-setup-btn.open{color:var(--accent);border-color:var(--accent)}
+.setup-panel{display:none;background:var(--bg3);border-radius:10px;padding:10px 12px;margin:6px 0 4px;font-size:12px;color:var(--text2);line-height:1.75;border-left:2px solid var(--accent)}
+.setup-panel.open{display:block}
+.setup-step{margin-bottom:3px;display:flex;gap:6px}
+.setup-step:last-child{margin-bottom:0}
+.step-num{color:var(--accent);font-weight:500;flex-shrink:0;min-width:14px}
+.timeline-row{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:.5px solid rgba(255,255,255,.05)}
+.timeline-row:last-child{border-bottom:none}
+.tl-time{font-size:12px;color:var(--text3);min-width:52px;padding-top:1px;font-weight:300}
+.tl-text{font-size:13px;color:var(--text2)}
+.tl-dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.oura-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.oura-field label{display:block;font-size:11px;color:var(--text3);margin-bottom:6px;font-weight:500;letter-spacing:.05em}
+.oura-field input{width:100%;background:var(--bg3);border:.5px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);font-family:var(--font-body);font-size:16px;font-weight:500;outline:none;-webkit-appearance:none}
+.oura-field input:focus{border-color:var(--accent)}
+.oura-field input::placeholder{color:var(--text3);font-weight:300;font-size:14px}
+.submit-btn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:12px;color:#0a1628;font-family:var(--font-body);font-size:15px;font-weight:500;cursor:pointer;transition:background .15s,transform .1s}
+.submit-btn:active{transform:scale(.98);background:var(--accent2)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed}
+.metric-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:.5px solid rgba(255,255,255,.05)}
+.metric-row:last-child{border-bottom:none}
+.metric-label{font-size:13px;color:var(--text2)}
+.metric-val{font-size:14px;color:var(--text);font-weight:500}
+.metric-val.good{color:var(--accent)}
+.metric-val.warn{color:var(--warn)}
+.metric-val.bad{color:var(--danger)}
+.checkin-response{background:var(--bg3);border:.5px solid var(--border);border-radius:12px;padding:14px;margin-top:12px;font-size:13px;color:var(--text2);line-height:1.65;font-family:var(--font-display);font-style:italic}
+.chat-messages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.chat-messages::-webkit-scrollbar{display:none}
+.msg{display:flex;gap:8px;align-items:flex-end}
+.msg.user{flex-direction:row-reverse}
+.msg-bubble{max-width:78%;padding:10px 14px;font-size:14px;line-height:1.6;white-space:pre-wrap}
+.msg.assistant .msg-bubble{background:var(--card);border:.5px solid var(--border);border-radius:4px 16px 16px 16px;color:var(--text);font-family:var(--font-display)}
+.msg.user .msg-bubble{background:var(--accent);border-radius:16px 16px 4px 16px;color:#0a1628;font-weight:500}
+.msg-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:500}
+.msg.assistant .msg-avatar{background:rgba(31,212,138,.15);color:var(--accent)}
+.msg.user .msg-avatar{background:var(--accent);color:#0a1628}
+.chat-input-row{display:flex;gap:8px;align-items:flex-end;padding:10px 16px;padding-bottom:max(10px,env(safe-area-inset-bottom));background:var(--bg2);border-top:.5px solid var(--border);flex-shrink:0}
+.chat-textarea{flex:1;background:var(--bg3);border:.5px solid var(--border);border-radius:20px;padding:10px 14px;color:var(--text);font-family:var(--font-body);font-size:14px;resize:none;outline:none;line-height:1.4;max-height:100px;min-height:40px;-webkit-appearance:none}
+.chat-textarea:focus{border-color:var(--accent)}
+.chat-textarea::placeholder{color:var(--text3)}
+.send-btn{width:40px;height:40px;border-radius:50%;border:none;background:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,transform .1s}
+.send-btn:active{transform:scale(.93)}
+.send-btn:disabled{background:var(--text3);cursor:not-allowed}
+.quick-chips{display:flex;gap:6px;padding:8px 16px 0;overflow-x:auto;flex-shrink:0}
+.quick-chips::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;padding:6px 12px;border-radius:20px;border:.5px solid var(--border);background:var(--card);color:var(--text2);font-size:12px;font-family:var(--font-body);cursor:pointer;transition:all .15s;flex-shrink:0}
+.chip:active{background:var(--bg3);color:var(--accent);border-color:var(--accent)}
+.feel-btn{white-space:nowrap;padding:6px 12px;border-radius:20px;border:.5px solid var(--border);background:var(--card);color:var(--text2);font-size:12px;font-family:var(--font-body);cursor:pointer}
+.typing-dots{display:flex;gap:4px;align-items:center;padding:4px 2px}
+.typing-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:tdot 1.2s ease-in-out infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}
+.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes tdot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+.taper-week{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:.5px solid rgba(255,255,255,.05)}
+.taper-week:last-child{border-bottom:none}
+.taper-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.taper-num.done{background:rgba(31,212,138,.15);color:var(--accent)}
+.taper-num.current{background:var(--accent);color:#0a1628}
+.taper-num.future{background:var(--bg3);color:var(--text3)}
+.taper-title{font-size:14px;color:var(--text);margin-bottom:2px;font-weight:500}
+.taper-desc{font-size:12px;color:var(--text3);font-weight:300}
+.taper-mg{font-size:11px;color:var(--accent);font-weight:500;margin-top:3px}
+.progress-bar-bg{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin:12px 0 4px}
+.progress-bar-fill{height:100%;border-radius:3px;background:var(--accent);transition:width .5s ease}
+.bike-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:.5px solid rgba(255,255,255,.05);font-size:13px}
+.bike-row:last-child{border-bottom:none}
+.bike-key{color:var(--text2)}
+.bike-val{color:var(--accent);font-weight:500;text-align:right;max-width:60%}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- TODAY -->
+<div class="screen active" id="screen-today">
+  <div class="header">
+    <div class="header-row">
+      <div><div class="header-title">Good morning.</div><div class="header-sub" id="today-date"></div></div>
+      <div class="kevin-badge"><div class="kevin-dot"></div><span class="kevin-name">Kevin</span></div>
+    </div>
+  </div>
+  <div class="scroll">
+    <div id="today-day-type" class="day-type"></div>
+    <div class="card">
+      <div class="card-label" id="workout-card-label">Today's workout</div>
+      <div id="today-workout-content"></div>
+    </div>
+    <div class="card" id="bike-setup-card" style="display:none">
+      <div class="card-label">VeloCore setup</div>
+      <div id="bike-setup-content"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Today's schedule</div>
+      <div id="today-schedule"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Daily reminders</div>
+      <div class="timeline-row"><div class="tl-dot" style="background:#ffa94d"></div><div class="tl-time">All day</div><div class="tl-text">No Mountain Dew after 4:00 PM</div></div>
+      <div class="timeline-row"><div class="tl-dot" style="background:#1fd48a"></div><div class="tl-time">Lunch</div><div class="tl-text">Eat something — don't skip</div></div>
+      <div class="timeline-row"><div class="tl-dot" style="background:#8fa8c8"></div><div class="tl-time">8:00 PM</div><div class="tl-text">IT leadership reading</div></div>
+      <div class="timeline-row"><div class="tl-dot" style="background:#4a6080"></div><div class="tl-time">9:00 PM</div><div class="tl-text">Gaming cutoff — wind down</div></div>
+      <div class="timeline-row"><div class="tl-dot" style="background:#4a6080"></div><div class="tl-time">10:30 PM</div><div class="tl-text">Lights out — protect your REM</div></div>
+    </div>
+  </div>
+  <nav class="nav" id="nav-today">
+    <button class="nav-btn active" onclick="showScreen('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
+    <button class="nav-btn" onclick="showScreen('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="showScreen('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
+    <button class="nav-btn" onclick="showScreen('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
+  </nav>
+</div>
+
+<!-- CHECK-IN -->
+<div class="screen" id="screen-oura">
+  <div class="header"><div class="header-title">Morning Check-in</div><div class="header-sub">Oura ring + how you feel</div></div>
+  <div class="scroll">
+    <div class="card">
+      <div class="card-label">Oura Ring</div>
+      <div class="oura-grid">
+        <div class="oura-field"><label>READINESS</label><input type="number" id="readiness" placeholder="e.g. 74" min="0" max="100"></div>
+        <div class="oura-field"><label>SLEEP SCORE</label><input type="number" id="sleep-score" placeholder="e.g. 68" min="0" max="100"></div>
+        <div class="oura-field"><label>TOTAL SLEEP</label><input type="text" id="sleep-total" placeholder="e.g. 6h 20m"></div>
+        <div class="oura-field"><label>REM SLEEP</label><input type="text" id="rem" placeholder="e.g. 48m"></div>
+        <div class="oura-field"><label>HRV</label><input type="number" id="hrv" placeholder="e.g. 34" min="0"></div>
+        <div class="oura-field"><label>RESTING HR</label><input type="number" id="rhr" placeholder="e.g. 62" min="0"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">How do you feel?</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="feel-btn chip" data-val="great" onclick="selectFeel(this)">Great</button>
+        <button class="feel-btn chip" data-val="good" onclick="selectFeel(this)">Good</button>
+        <button class="feel-btn chip" data-val="okay" onclick="selectFeel(this)">Okay</button>
+        <button class="feel-btn chip" data-val="tired" onclick="selectFeel(this)">Tired</button>
+        <button class="feel-btn chip" data-val="back aching" onclick="selectFeel(this)">Back aching</button>
+        <button class="feel-btn chip" data-val="rough" onclick="selectFeel(this)">Rough</button>
+      </div>
+    </div>
+    <button class="submit-btn" id="checkin-btn" onclick="submitCheckin()" disabled>Get Kevin's Assessment</button>
+    <div id="checkin-result" style="display:none">
+      <div class="card" style="margin-top:12px"><div class="card-label">Last check-in</div><div id="checkin-metrics"></div></div>
+      <div class="checkin-response" id="checkin-response-text"></div>
+    </div>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn" onclick="showScreen('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
+    <button class="nav-btn active" onclick="showScreen('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="showScreen('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
+    <button class="nav-btn" onclick="showScreen('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
+  </nav>
+</div>
+
+<!-- CHAT -->
+<div class="screen" id="screen-chat" style="background:var(--bg)">
+  <div class="header" style="border-bottom:.5px solid var(--border)">
+    <div class="header-row">
+      <div><div class="header-title" style="font-size:22px">Kevin</div><div class="header-sub">Your personal fitness coach</div></div>
+      <div class="kevin-badge"><div class="kevin-dot"></div><span class="kevin-name">Online</span></div>
+    </div>
+  </div>
+  <div class="quick-chips">
+    <button class="chip" onclick="sendQuick('What is today\'s workout?')">Today's workout</button>
+    <button class="chip" onclick="sendQuick('How do I set up the Bowflex for today?')">Equipment setup</button>
+    <button class="chip" onclick="sendQuick('I just finished my session — log it')">Log session</button>
+    <button class="chip" onclick="sendQuick('My back is aching — what should I do?')">Back aching</button>
+    <button class="chip" onclick="sendQuick('I skipped my workout today')">Missed workout</button>
+    <button class="chip" onclick="sendQuick('How is my sleep improving?')">Sleep progress</button>
+    <button class="chip" onclick="sendQuick('What should I eat today?')">Nutrition</button>
+    <button class="chip" onclick="sendQuick('What VeloCore program should I use today?')">Bike program</button>
+    <button class="chip" onclick="sendQuick('How is my Mountain Dew taper going?')">Taper check</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="msg assistant">
+      <div class="msg-avatar">K</div>
+      <div class="msg-bubble">Hey. I'm Kevin — your coach.\n\nI know your full plan: Bowflex Xtreme 2 SE with all attachments including the preacher curl, VeloCore bike, T8 fracture, and your Mountain Dew situation.\n\nTap a prompt or ask me anything.</div>
+    </div>
+  </div>
+  <div class="chat-input-row">
+    <textarea class="chat-textarea" id="chat-input" placeholder="Ask Kevin anything..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button class="send-btn" id="send-btn" onclick="sendChat()" disabled>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a1628" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+  <nav class="nav" style="border-top:none">
+    <button class="nav-btn" onclick="showScreen('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
+    <button class="nav-btn" onclick="showScreen('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn active" onclick="showScreen('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
+    <button class="nav-btn" onclick="showScreen('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
+  </nav>
+</div>
+
+<!-- TAPER -->
+<div class="screen" id="screen-taper">
+  <div class="header"><div class="header-title">Mtn Dew Taper</div><div class="header-sub">8-week caffeine reduction plan</div></div>
+  <div class="scroll">
+    <div class="card">
+      <div class="card-label">Overall progress</div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px"><span style="font-size:13px;color:var(--text2)">630mg → 85mg caffeine</span><span style="font-size:13px;color:var(--accent);font-weight:500" id="taper-pct"></span></div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="taper-progress-bar"></div></div>
+      <div style="font-size:11px;color:var(--text3);margin-top:4px" id="taper-status-text"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">The one rule — every single day</div>
+      <div style="background:rgba(255,107,107,.1);border:.5px solid rgba(255,107,107,.3);border-radius:10px;padding:10px 12px;font-size:13px;color:#ff9999;line-height:1.5">No Mountain Dew after 4:00 PM — ever. Caffeine stays in your system 5–6 hours and wrecks your REM sleep.</div>
+    </div>
+    <div class="card"><div class="card-label">Week by week</div><div id="taper-weeks"></div></div>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn" onclick="showScreen('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
+    <button class="nav-btn" onclick="showScreen('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="showScreen('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
+    <button class="nav-btn active" onclick="showScreen('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
+  </nav>
+</div>
+
+</div>
+<script>
+const SYSTEM_PROMPT=`You are Kevin, a personal fitness coach and wellness assistant. Be encouraging, direct, and concise — he checks in from his phone. Division Manager of infrastructure services.
+
+EQUIPMENT:
+Bowflex Xtreme 2 SE — all attachments including preacher curl attachment
+Bowflex VeloCore bike
+
+BOWFLEX XTREME 2 SE — FULL SETUP:
+
+PUSH DAY (Monday 6:15-7:00am):
+1. CHEST PRESS: Pulleys BOTTOM. Single hand grips. Sit AWAY from tower, back flat on pad. Overhand grip at chest height. Press forward until nearly straight, return slowly. T8: back stays on pad the whole time.
+2. SHOULDER PRESS: Pulleys BOTTOM. Single hand grips. Sit AWAY from tower, tall posture. Start at shoulder height, press overhead, stop just short of lockout. T8: light weight — stop if spine feels compressed.
+3. TRICEP PUSHDOWN: Pulley TOP. Short straight bar or V-bar. Stand/sit FACING tower 12 inches back. Overhand grip, elbows pinned to sides. Push down until arms straight. T8: very low spinal load — safe.
+4. LATERAL RAISE: Pulleys BOTTOM. Single hand grip, one arm at a time. Stand sideways to tower, working arm crosses body. Raise arm to shoulder height. T8: light weight only.
+
+PULL DAY (Friday 6:15-7:00am):
+1. LAT PULLDOWN: Pulley TOP. Lat bar (long curved bar). Sit FACING tower, feet flat. Wide overhand grip outside shoulders. Pull bar to upper chest leading with elbows. Stay upright — max 15 degrees lean. T8: no jerking.
+2. SEATED ROW: Pulleys BOTTOM. V-bar or hand grips. Sit FACING tower, feet flat, knees slightly bent. Neutral grip. Pull to lower chest, drive elbows back, squeeze shoulder blades. SPINE STAYS NEUTRAL — never round back. T8: most critical exercise for form.
+3. PREACHER CURL (preferred over standing curl for T8): Attach preacher curl pad to frame. Pulleys BOTTOM. Straight bar or EZ bar. Drape upper arms over pad — fully supported. Underhand shoulder-width grip. Curl to chin, squeeze, lower fully. T8: zero spinal load — safest bicep option.
+4. REAR DELT FLY: Pulleys TOP. Single hand grips — CROSS the cables (right hand takes left cable). Stand/sit FACING tower, arms extended forward, slight elbow bend. Pull arms apart and back, squeeze rear shoulders. T8: low load, great for posture.
+
+BOWFLEX VELOCORE SETUP:
+Phase 1 (wks 1-3) Wed 6:00-6:40am: Upright mode only (no lean — T8). Resistance level 3-4. Manual or Scenic mode. 40 min (5 warm up, 30 steady, 5 cool down). 70-80 RPM. 100-120 BPM conversational.
+Phase 2 (wks 4-7) Wed+Sat: Upright, try slight lean if back allows. Level 5-6. Intervals 2 min hard/3 min easy. 40-45 min. 80-90 RPM work intervals. 120-140 BPM.
+Phase 3 (wks 8+) Wed+Sat+Sun easy: Try full lean — assess T8 first. Level 6-8 work/3 recovery. Built-in HIIT. 45 min (Sun 25 min easy upright). 85-95 RPM work. 140-155 BPM work.
+
+T8 RULES: Doctor says do everything, slow down when it aches. Aching = reduce weight/resistance 20% and continue. Sharp pain = stop, rest, call doctor if persists. Preacher curl preferred for biceps. Never round back under load.
+
+SCHEDULE: Remote Mon/Fri Bowflex. Office Tue/Wed/Thu. Wed bike only. Wife Susan, daughters Kathryn and CJ, dog. Dog walk 5:30-6:15pm — keystone habit.
+TAPER: 630mg to 85mg over 8 weeks. Nothing after 4pm ever.
+SLEEP: 7+ hrs, 90 min REM target. Oura ring.
+NUTRITION: Protein breakfast, 400+ cal lunch, 64oz water daily.
+READING: 1hr nightly 8pm.
+Keep responses short and actionable. Always encourage.`;
+
+const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+const SETUP={
+  'Chest press':{steps:['Pulleys → BOTTOM (lowest rung)','Attachment → single hand grips','Sit AWAY from tower, back flat against pad','Overhand grip, handles at chest height','Press forward until arms nearly straight — return slowly','T8: keep back on pad the whole time — no arching']},
+  'Shoulder press':{steps:['Pulleys → BOTTOM','Attachment → single hand grips','Sit AWAY from tower, tall upright posture','Start handles at shoulder height','Press overhead — stop just short of lockout','T8: light weight only — stop if spine feels compressed']},
+  'Tricep pushdown':{steps:['Pulley → TOP position','Attachment → short straight bar or V-bar','Stand or sit FACING tower, 12 inches back','Overhand grip, pin elbows tight to sides','Push bar down until arms fully straight — squeeze','T8: very low spinal load — one of your safest exercises']},
+  'Lateral raise':{steps:['Pulleys → BOTTOM','Attachment → single hand grip — one arm at a time','Stand sideways to tower, working arm crosses body to start','Slight bend in elbow, neutral grip','Raise arm out to shoulder height — lower slowly','T8: light weight only — small muscle group']},
+  'Lat pulldown':{steps:['Pulley → TOP','Attachment → lat bar (long curved bar)','Sit FACING tower, feet flat on floor','Wide overhand grip, hands just outside shoulders','Pull bar to upper chest leading with elbows','Torso stays upright — max 15 degree lean back','T8: no jerking or momentum — smooth and controlled']},
+  'Seated row':{steps:['Pulleys → BOTTOM','Attachment → V-bar or single hand grips','Sit FACING tower, feet flat, knees slightly bent','Neutral grip (palms facing each other)','Pull to lower chest, drive elbows back, squeeze shoulder blades','CRITICAL: spine stays tall and neutral — never round','T8: stop immediately if back starts to round under load']},
+  'Preacher curl':{steps:['Attach preacher curl pad to Bowflex frame (see manual)','Pulleys → BOTTOM','Attachment → straight bar or EZ curl bar','Drape upper arms over preacher pad — fully supported','Underhand grip, shoulder width apart','Curl bar to chin — squeeze at top — lower fully','T8: SAFEST bicep option — zero spinal load with arm support']},
+  'Bicep curl':{steps:['Pulleys → BOTTOM','Attachment → single hand grips','Stand or sit FACING tower','Underhand grip, pin elbows to sides','Curl handles to shoulders — no body swing','T8: consider preacher curl attachment instead for better back support']},
+  'Rear delt fly':{steps:['Pulleys → TOP','Attachment → single hand grips','CROSS the cables — right hand takes left cable, left takes right','Stand or sit FACING tower, arms extended forward','Slight elbow bend, palms facing each other','Pull arms apart and back — squeeze rear shoulders at end','T8: low spinal load — excellent for posture correction']}
+};
+
+const VELOCORE={
+  1:{mode:'Upright only — no lean (T8 safety)',resistance:'Level 3–4',program:'Manual or Scenic mode',duration:'40 min — 5 warm up · 30 steady · 5 cool down',rpm:'70–80 RPM steady',hr:'100–120 BPM — conversational pace'},
+  2:{mode:'Upright — try slight lean if back allows',resistance:'Level 5–6',program:'Intervals — 2 min hard / 3 min easy',duration:'40–45 min',rpm:'80–90 RPM on work intervals',hr:'120–140 BPM'},
+  3:{mode:'Try full lean — assess T8 comfort first',resistance:'Level 6–8 work / Level 3 recovery',program:'Built-in HIIT or custom intervals',duration:'45 min (Sun: 25 min easy upright only)',rpm:'85–95 RPM work intervals',hr:'140–155 BPM work / 100–110 BPM recovery'}
+};
+
+const WORKOUTS={
+  1:{type:'Bowflex — Push Day',time:'6:15 – 7:00 AM',tag:'remote',exercises:[{name:'Chest press',sets:'2×10'},{name:'Shoulder press',sets:'2×10'},{name:'Tricep pushdown',sets:'2×12'},{name:'Lateral raise',sets:'2×12'}]},
+  3:{type:'VeloCore Bike',time:'6:00 – 6:40 AM',tag:'office',bike:true},
+  5:{type:'Bowflex — Pull Day',time:'6:15 – 7:00 AM',tag:'remote',exercises:[{name:'Lat pulldown',sets:'2×10'},{name:'Seated row',sets:'2×10'},{name:'Preacher curl',sets:'2×12'},{name:'Rear delt fly',sets:'2×12'}]}
+};
+
+const SCHEDULES={
+  0:[{t:'Natural',txt:'Feed dog + breakfast'},{t:'Morning',txt:'Personal time / recovery'},{t:'5:30 PM',txt:'Dog walk with Susan'},{t:'6:15 PM',txt:'Gaming (reducing)'},{t:'8:00 PM',txt:'IT leadership reading'},{t:'9:00 PM',txt:'Wind-down'}],
+  1:[{t:'6:00 AM',txt:'Feed dog'},{t:'6:15 AM',txt:'Bowflex push workout'},{t:'7:00 AM',txt:'Shower + breakfast'},{t:'8:00 AM',txt:'Work (remote)'},{t:'12:00 PM',txt:'Lunch — eat something'},{t:'5:00 PM',txt:'Feed dog dinner'},{t:'5:30 PM',txt:'Dog walk with Susan'},{t:'8:00 PM',txt:'IT leadership reading'}],
+  2:[{t:'6:00 AM',txt:'Feed dog + breakfast'},{t:'7:00 AM',txt:'Depart for office'},{t:'8:00 AM',txt:'Work'},{t:'12:00 PM',txt:'Lunch — eat something'},{t:'4:30 PM',txt:'Depart on time'},{t:'5:00 PM',txt:'Feed dog dinner'},{t:'5:30 PM',txt:'Dog walk with Susan'},{t:'8:00 PM',txt:'IT leadership reading'}],
+  3:[{t:'6:00 AM',txt:'Feed dog + bike workout'},{t:'6:40 AM',txt:'Shower + quick breakfast'},{t:'7:00 AM',txt:'Depart for office'},{t:'8:00 AM',txt:'Work'},{t:'12:00 PM',txt:'Lunch — eat something'},{t:'4:30 PM',txt:'Depart on time'},{t:'5:00 PM',txt:'Feed dog dinner'},{t:'5:30 PM',txt:'Dog walk with Susan'},{t:'8:00 PM',txt:'IT leadership reading'}],
+  4:[{t:'6:00 AM',txt:'Feed dog + breakfast'},{t:'7:00 AM',txt:'Depart for office'},{t:'8:00 AM',txt:'Work'},{t:'12:00 PM',txt:'Lunch — eat something'},{t:'4:30 PM',txt:'Depart on time'},{t:'5:00 PM',txt:'Feed dog dinner'},{t:'5:30 PM',txt:'Dog walk with Susan'},{t:'8:00 PM',txt:'IT leadership reading'}],
+  5:[{t:'6:00 AM',txt:'Feed dog'},{t:'6:15 AM',txt:'Bowflex pull workout'},{t:'7:00 AM',txt:'Shower + breakfast'},{t:'8:00 AM',txt:'Work (remote)'},{t:'12:00 PM',txt:'Lunch — eat something'},{t:'5:00 PM',txt:'Feed dog dinner'},{t:'5:30 PM',txt:'Dog walk with Susan'},{t:'8:00 PM',txt:'IT leadership reading'}],
+  6:[{t:'Natural',txt:'Feed dog + breakfast'},{t:'Morning',txt:'Car work / personal time'},{t:'Late AM',txt:'Batch cooking (45 min)'},{t:'Afternoon',txt:'Family time'},{t:'5:30 PM',txt:'Dog walk with Susan'},{t:'8:00 PM',txt:'IT leadership reading'}]
+};
+
+const TAPER_WEEKS=[
+  {start:new Date(2026,4,11),label:'Week 1',title:'Cut one 20oz → replace with water',desc:'2x 20oz + 3x 12oz',mg:'~510mg caffeine'},
+  {start:new Date(2026,4,18),label:'Week 2',title:'Cut second 20oz → replace with water',desc:'1x 20oz + 3x 12oz',mg:'~420mg caffeine'},
+  {start:new Date(2026,4,25),label:'Week 3',title:'Cut afternoon 12oz → water at lunch',desc:'1x 20oz + 2x 12oz',mg:'~340mg caffeine'},
+  {start:new Date(2026,5,1), label:'Week 4',title:'All 20oz gone → 3x 12oz only',desc:'3x 12oz cans',mg:'~255mg caffeine'},
+  {start:new Date(2026,5,8), label:'Week 5',title:'Down to 2x 12oz, nothing after noon',desc:'2x 12oz cans',mg:'~170mg caffeine'},
+  {start:new Date(2026,5,15),label:'Week 6',title:'1x 12oz + sparkling water only',desc:'1x 12oz + caffeine-free',mg:'~85mg caffeine'},
+  {start:new Date(2026,5,29),label:'Done', title:'Maintenance — 1x 12oz morning only',desc:'Water rest of day forever',mg:'~85mg — healthy range'}
+];
+
+let chatHistory=[],selectedFeel='',loading=false;
+
+function getPhase(){const now=new Date();const start=new Date(2026,4,4);const wks=Math.floor((now-start)/(7*24*60*60*1000));return wks<3?1:wks<8?2:3;}
+
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const idx={today:0,oura:1,chat:2,taper:3}[name];
+  document.querySelectorAll('.nav').forEach(nav=>{const btns=nav.querySelectorAll('.nav-btn');if(btns[idx])btns[idx].classList.add('active');});
+  if(name==='chat')setTimeout(()=>{const m=document.getElementById('chat-messages');m.scrollTop=m.scrollHeight;document.getElementById('chat-input').focus();},100);
+}
+
+function toggleSetup(id){
+  const panel=document.getElementById('panel-'+id);
+  const btn=document.getElementById('btn-'+id);
+  const open=panel.classList.toggle('open');
+  btn.textContent=open?'Setup ↑':'Setup ↓';
+  btn.classList.toggle('open',open);
+}
+
+function initToday(){
+  const now=new Date(),dow=now.getDay();
+  document.getElementById('today-date').textContent=DAYS[dow]+', '+MONTHS[now.getMonth()]+' '+now.getDate();
+  const dtEl=document.getElementById('today-day-type');
+  if(dow===1||dow===5)dtEl.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block"></span> Remote day + Bowflex';
+  else if(dow===3)dtEl.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:#8fa8c8;display:inline-block"></span> Office day + VeloCore';
+  else if(dow===2||dow===4)dtEl.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:#8fa8c8;display:inline-block"></span> Office day — rest';
+  else dtEl.innerHTML='<span style="width:7px;height:7px;border-radius:50%;background:var(--text3);display:inline-block"></span> Weekend — recovery';
+
+  const w=WORKOUTS[dow];
+  const wContent=document.getElementById('today-workout-content');
+  const bikeCard=document.getElementById('bike-setup-card');
+  const bikeContent=document.getElementById('bike-setup-content');
+  const wLabel=document.getElementById('workout-card-label');
+
+  if(w&&w.exercises){
+    wLabel.textContent="Today's workout — tap Setup for cable positions";
+    bikeCard.style.display='none';
+    wContent.innerHTML='<div style="font-size:12px;color:var(--text2);margin-bottom:12px">'+w.time+' · '+w.type+'</div>'+
+      w.exercises.map((e,i)=>{
+        const steps=(SETUP[e.name]||{steps:[]}).steps;
+        return '<div style="margin-bottom:6px"><div class="workout-row" style="border-bottom:none;padding:6px 0">'+
+          '<div style="display:flex;align-items:center;gap:6px"><span class="ex-name">'+e.name+'</span>'+
+          '<button class="ex-setup-btn" id="btn-'+i+'" onclick="toggleSetup('+i+')">Setup ↓</button></div>'+
+          '<span class="ex-sets">'+e.sets+'</span></div>'+
+          '<div class="setup-panel" id="panel-'+i+'">'+
+          steps.map((s,si)=>'<div class="setup-step"><span class="step-num">'+(si+1)+'.</span><span>'+s+'</span></div>').join('')+
+          '</div></div>';
+      }).join('');
+  } else if(w&&w.bike){
+    wLabel.textContent="Today's workout — VeloCore";
+    bikeCard.style.display='block';
+    const phase=getPhase();
+    const p=VELOCORE[phase];
+    wContent.innerHTML='<div style="font-size:12px;color:var(--text2);margin-bottom:4px">'+w.time+' · '+w.type+'</div><div style="font-size:11px;color:var(--accent);font-weight:500">Phase '+phase+' settings in card below</div>';
+    bikeContent.innerHTML=Object.entries({Mode:p.mode,Resistance:p.resistance,Program:p.program,Duration:p.duration,'RPM target':p.rpm,'Heart rate':p.hr}).map(([k,v])=>'<div class="bike-row"><span class="bike-key">'+k+'</span><span class="bike-val">'+v+'</span></div>').join('');
+  } else {
+    wLabel.textContent="Today's workout";
+    bikeCard.style.display='none';
+    wContent.innerHTML='<div style="font-size:13px;color:var(--text2);font-style:italic;font-family:var(--font-display)">No structured workout today. The dog walk with Susan counts — enjoy it.</div>';
+  }
+
+  document.getElementById('today-schedule').innerHTML=SCHEDULES[dow].map(r=>'<div class="timeline-row"><div class="tl-dot" style="background:var(--text3)"></div><div class="tl-time">'+r.t+'</div><div class="tl-text">'+r.txt+'</div></div>').join('');
+}
+
+function initTaper(){
+  const now=new Date();now.setHours(0,0,0,0);
+  let current=-1;
+  for(let i=0;i<TAPER_WEEKS.length;i++){const next=TAPER_WEEKS[i+1];if(now>=TAPER_WEEKS[i].start&&(!next||now<next.start)){current=i;break;}if(now>TAPER_WEEKS[i].start)current=i;}
+  const total=(TAPER_WEEKS[TAPER_WEEKS.length-1].start-TAPER_WEEKS[0].start)/86400000;
+  const elapsed=Math.max(0,(now-TAPER_WEEKS[0].start)/86400000);
+  const pct=Math.min(100,Math.round(elapsed/total*100));
+  document.getElementById('taper-progress-bar').style.width=pct+'%';
+  document.getElementById('taper-pct').textContent=pct+'% complete';
+  document.getElementById('taper-status-text').textContent=now<TAPER_WEEKS[0].start?'Taper starts May 11':now>=TAPER_WEEKS[TAPER_WEEKS.length-1].start?'Taper complete — maintenance mode':'In progress — stay consistent';
+  document.getElementById('taper-weeks').innerHTML=TAPER_WEEKS.map((w,i)=>{
+    const next=TAPER_WEEKS[i+1];
+    let status=now<w.start?'future':i===current?'current':'done';
+    if(next&&now>=next.start)status='done';
+    const lbl=status==='done'?'✓':status==='current'?'→':(i+1).toString();
+    return '<div class="taper-week"><div class="taper-num '+status+'">'+lbl+'</div><div><div class="taper-title">'+w.title+'</div><div class="taper-desc">'+w.desc+'</div><div class="taper-mg">'+w.mg+'</div></div></div>';
+  }).join('');
+}
+
+function selectFeel(btn){
+  document.querySelectorAll('.feel-btn').forEach(b=>{b.style.color='';b.style.borderColor='';b.style.background='';});
+  btn.style.color='var(--accent)';btn.style.borderColor='var(--accent)';btn.style.background='rgba(31,212,138,.1)';
+  selectedFeel=btn.dataset.val;checkCheckinReady();
+}
+
+function checkCheckinReady(){
+  const has=document.getElementById('readiness').value||document.getElementById('sleep-score').value||selectedFeel;
+  document.getElementById('checkin-btn').disabled=!has;
+}
+
+document.querySelectorAll('#screen-oura input').forEach(i=>i.addEventListener('input',checkCheckinReady));
+
+async function submitCheckin(){
+  const r=document.getElementById('readiness').value,ss=document.getElementById('sleep-score').value,
+    st=document.getElementById('sleep-total').value,rem=document.getElementById('rem').value,
+    hrv=document.getElementById('hrv').value,rhr=document.getElementById('rhr').value;
+  const btn=document.getElementById('checkin-btn');
+  btn.disabled=true;btn.textContent='Kevin is thinking...';
+  const dow=new Date().getDay();
+  const msg=`Morning check-in. Oura: readiness ${r||'?'}, sleep score ${ss||'?'}, total sleep ${st||'?'}, REM ${rem||'?'}, HRV ${hrv||'?'}, resting HR ${rhr||'?'}. Feeling: ${selectedFeel||'not stated'}. Today is ${DAYS[dow]}, Phase ${getPhase()}. Give a 3-4 sentence coaching assessment and how hard to push today.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM_PROMPT,messages:[{role:'user',content:msg}]})});
+    const data=await res.json();
+    const reply=data.content?.find(b=>b.type==='text')?.text||'Unable to get response.';
+    const metrics=[];
+    if(r)metrics.push({label:'Readiness',val:r,cls:r>=70?'good':r>=50?'warn':'bad'});
+    if(ss)metrics.push({label:'Sleep score',val:ss,cls:ss>=70?'good':ss>=50?'warn':'bad'});
+    if(st)metrics.push({label:'Total sleep',val:st,cls:''});
+    if(rem)metrics.push({label:'REM',val:rem,cls:''});
+    if(hrv)metrics.push({label:'HRV',val:hrv,cls:''});
+    if(rhr)metrics.push({label:'Resting HR',val:rhr,cls:''});
+    if(selectedFeel)metrics.push({label:'Feeling',val:selectedFeel,cls:''});
+    document.getElementById('checkin-metrics').innerHTML=metrics.map(m=>'<div class="metric-row"><span class="metric-label">'+m.label+'</span><span class="metric-val '+m.cls+'">'+m.val+'</span></div>').join('');
+    document.getElementById('checkin-response-text').textContent=reply;
+    document.getElementById('checkin-result').style.display='block';
+    chatHistory.push({role:'user',content:msg});
+    chatHistory.push({role:'assistant',content:reply});
+  }catch(e){
+    document.getElementById('checkin-response-text').textContent='Connection error. Please try again.';
+    document.getElementById('checkin-result').style.display='block';
+  }
+  btn.disabled=false;btn.textContent="Get Kevin's Assessment";
+}
+
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';document.getElementById('send-btn').disabled=!el.value.trim()||loading;}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
+function sendQuick(text){document.getElementById('chat-input').value=text;sendChat();}
+
+function addMsg(role,content){
+  const msgs=document.getElementById('chat-messages');
+  const div=document.createElement('div');div.className='msg '+role;
+  div.innerHTML='<div class="msg-avatar">'+(role==='assistant'?'K':'DM')+'</div><div class="msg-bubble">'+content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>';
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+}
+
+function addTyping(){
+  const msgs=document.getElementById('chat-messages');
+  const div=document.createElement('div');div.className='msg assistant';div.id='typing';
+  div.innerHTML='<div class="msg-avatar">K</div><div class="msg-bubble" style="padding:10px 14px"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+}
+
+function removeTyping(){const t=document.getElementById('typing');if(t)t.remove();}
+
+async function sendChat(){
+  const inp=document.getElementById('chat-input');
+  const text=inp.value.trim();
+  if(!text||loading)return;
+  loading=true;inp.value='';inp.style.height='auto';
+  document.getElementById('send-btn').disabled=true;
+  addMsg('user',text);chatHistory.push({role:'user',content:text});
+  addTyping();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM_PROMPT,messages:chatHistory})});
+    const data=await res.json();
+    const reply=data.content?.find(b=>b.type==='text')?.text||'Something went wrong.';
+    removeTyping();addMsg('assistant',reply);chatHistory.push({role:'assistant',content:reply});
+  }catch{removeTyping();addMsg('assistant','Connection error. Please try again.');}
+  loading=false;document.getElementById('send-btn').disabled=false;inp.focus();
+}
+
+initToday();initTaper();
+</script>
+</body>
+</html>
