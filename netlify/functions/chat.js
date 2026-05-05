@@ -55,6 +55,9 @@ exports.handler = async function(event, context) {
         })
       });
       const data = await response.json();
+      if (!response.ok) {
+        return { statusCode: response.status, headers, body: JSON.stringify({ error: data.error?.message || JSON.stringify(data) }) };
+      }
       return { statusCode: 200, headers, body: JSON.stringify(data) };
     }
 
