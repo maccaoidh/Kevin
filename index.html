@@ -682,7 +682,7 @@ async function sendChat(){
   try{
     const res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SP,messages:chatHist})});
     const data=await res.json();
-    const reply=data.content?.find(b=>b.type==='text')?.text||'Something went wrong.';
+    const reply=data.content?.find(b=>b.type==='text')?.text||(data.error?'Error: '+data.error:'Something went wrong.');
     rmTyping();addMsg('assistant',reply);chatHist.push({role:'assistant',content:reply});
   }catch{rmTyping();addMsg('assistant','Connection error. Please try again.');}
   loading=false;document.getElementById('send-btn').disabled=false;inp.focus();
