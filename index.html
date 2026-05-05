@@ -141,7 +141,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 <div class="screen active" id="screen-today">
   <div class="header">
     <div class="header-row">
-      <div><div class="htitle">Good morning.</div><div class="hsub" id="today-date"></div></div>
+      <div><div class="htitle" id="main-greeting">Good morning.</div><div class="hsub" id="today-date"></div></div>
       <div class="kbadge"><div class="kdot"></div><span class="kname">Kevin</span></div>
     </div>
   </div>
@@ -232,7 +232,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 <!-- CHECK-IN -->
 <div class="screen" id="screen-oura">
-  <div class="header"><div class="htitle">Morning Check-in</div><div class="hsub">Oura ring + how you feel</div></div>
+  <div class="header"><div class="htitle" id="checkin-greeting">Morning Check-in</div><div class="hsub">Oura ring + how you feel</div></div>
   <div class="scroll">
     <div class="card">
       <div class="clabel">Oura Ring</div>
@@ -415,7 +415,9 @@ function weekKey(offset=0){const n=new Date();n.setDate(n.getDate()+offset);retu
 function loadHabits(){try{const d=localStorage.getItem(todayKey());return d?JSON.parse(d):{}}catch{return{}}}
 function saveHabits(h){try{localStorage.setItem(todayKey(),JSON.stringify(h))}catch{}}
 
+function getGreeting(){const h=new Date().getHours();if(h<12)return'Good morning.';if(h<17)return'Good afternoon.';if(h<21)return'Good evening.';return'Good night.';}
 function getPhase(){const s=new Date(2026,4,4);const w=Math.floor((new Date()-s)/(7*24*60*60*1000));return w<3?1:w<8?2:3;}
+
 
 function show(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -437,7 +439,10 @@ function toggleSetup(id,btn){
 
 function initToday(){
   const now=new Date(),dow=now.getDay();
+  document.getElementById('main-greeting').textContent=getGreeting();
   document.getElementById('today-date').textContent=DAYS[dow]+', '+MONTHS[now.getMonth()]+' '+now.getDate();
+  const checkinLabels={0:'Night Check-in',1:'Morning Check-in',2:'Morning Check-in',3:'Afternoon Check-in',4:'Afternoon Check-in',5:'Evening Check-in',6:'Evening Check-in',7:'Evening Check-in',8:'Evening Check-in',9:'Evening Check-in',10:'Evening Check-in',11:'Evening Check-in',12:'Afternoon Check-in',13:'Afternoon Check-in',14:'Afternoon Check-in',15:'Afternoon Check-in',16:'Afternoon Check-in',17:'Evening Check-in',18:'Evening Check-in',19:'Evening Check-in',20:'Evening Check-in',21:'Night Check-in',22:'Night Check-in',23:'Night Check-in'};
+  const ci=document.getElementById('checkin-greeting');if(ci)ci.textContent=checkinLabels[now.getHours()]||'Check-in';
   const tag=document.getElementById('today-tag');
   if(dow===1||dow===5)tag.innerHTML='<span style="width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block"></span> Remote + Bowflex';
   else if(dow===3)tag.innerHTML='<span style="width:6px;height:6px;border-radius:50%;background:#8fa8c8;display:inline-block"></span> Office + VeloCore';
