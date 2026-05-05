@@ -135,7 +135,27 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .pbar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin:10px 0 3px}
 .pfill{height:100%;border-radius:3px;background:var(--accent);transition:width .5s ease}
 /* MEALS */
-.meal-week{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
+.meal-select-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:.5px solid rgba(255,255,255,.05);cursor:pointer}
+.meal-select-item:last-child{border-bottom:none}
+.meal-checkbox{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--text3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .2s}
+.meal-checkbox.checked{background:var(--accent);border-color:var(--accent)}
+.meal-checkbox svg{opacity:0;transition:opacity .2s}
+.meal-checkbox.checked svg{opacity:1}
+.meal-select-info{flex:1}
+.meal-select-title{font-size:13px;color:var(--text);font-weight:500}
+.meal-select-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.grocery-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:.5px solid rgba(255,255,255,.05);cursor:pointer}
+.grocery-item:last-child{border-bottom:none}
+.grocery-check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--text3);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.grocery-check.checked{background:var(--bg3);border-color:var(--text3)}
+.grocery-check.checked svg{opacity:1}
+.grocery-check svg{opacity:0;transition:opacity .2s}
+.grocery-name{font-size:13px;color:var(--text);flex:1}
+.grocery-name.checked{color:var(--text3);text-decoration:line-through}
+.grocery-count{font-size:11px;color:var(--text3);margin-left:4px}
+.grocery-section{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:12px 0 4px;padding-top:4px;border-top:.5px solid var(--border)}
+.grocery-section:first-child{margin-top:0;border-top:none}
+
 .meal-week::-webkit-scrollbar{display:none}
 .meal-day-btn{flex-shrink:0;padding:6px 14px;border-radius:20px;border:.5px solid var(--border);background:var(--card);color:var(--text2);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
 .meal-day-btn.active{background:var(--accent);color:#0a1628;border-color:var(--accent);font-weight:500}
@@ -190,6 +210,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
     <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
+    <button class="nav-btn" onclick="show('grocery')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Shop</button>
     <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
@@ -237,6 +258,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="nav-btn active" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
     <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
+    <button class="nav-btn" onclick="show('grocery')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Shop</button>
     <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
@@ -285,6 +307,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn active" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
     <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
+    <button class="nav-btn" onclick="show('grocery')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Shop</button>
     <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
@@ -319,6 +342,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
     <button class="nav-btn active" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
+    <button class="nav-btn" onclick="show('grocery')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Shop</button>
     <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
@@ -360,6 +384,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
     <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
+    <button class="nav-btn" onclick="show('grocery')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Shop</button>
     <button class="nav-btn active" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
@@ -386,8 +411,35 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
     <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
+    <button class="nav-btn" onclick="show('grocery')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Shop</button>
     <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn active" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
+  </nav>
+</div>
+
+<!-- GROCERY SCREEN -->
+<div class="screen" id="screen-grocery">
+  <div class="header">
+    <div class="header-row">
+      <div><div class="htitle">Grocery List</div><div class="hsub" id="grocery-summary">Select meals first</div></div>
+      <div class="kbadge"><div class="kdot"></div><span class="kname">Kevin</span></div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;padding:0 16px 10px;flex-shrink:0">
+    <button onclick="clearCheckedGrocery()" style="flex:1;padding:8px;background:var(--bg3);color:var(--text2);border:.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer">Clear checked</button>
+    <button onclick="clearAllGrocery()" style="flex:1;padding:8px;background:var(--bg3);color:var(--text3);border:.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer">Reset list</button>
+  </div>
+  <div class="scroll" style="padding-top:0">
+    <div class="card"><div id="grocery-list"><div style="font-size:13px;color:var(--text3);font-style:italic;font-family:'DM Serif Display',Georgia,serif;padding:8px 0">Select meals in the Meals tab first.</div></div></div>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn" onclick="show('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
+    <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
+    <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
+    <button class="nav-btn active" onclick="show('grocery')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Shop</button>
+    <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
+    <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
 </div>
 
@@ -547,12 +599,13 @@ function show(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  const idx={today:0,habits:1,oura:2,meals:3,chat:4,taper:5}[name];
+  const idx={today:0,habits:1,oura:2,meals:3,grocery:4,chat:5,taper:6}[name];
   document.querySelectorAll('.nav').forEach(nav=>{const bs=nav.querySelectorAll('.nav-btn');if(bs[idx])bs[idx].classList.add('active');});
   if(name==='chat')setTimeout(()=>{const m=document.getElementById('chat-msgs');m.scrollTop=m.scrollHeight;document.getElementById('chat-input').focus();},100);
   if(name==='habits')renderHabits();
   if(name==='oura'){renderOuraHistory();setTimeout(fetchOura,300);}
   if(name==='meals')renderMeals();
+  if(name==='grocery')renderGrocery();
 }
 
 function toggleSetup(id,btn){
@@ -761,8 +814,190 @@ async function sendChat(){
   loading=false;document.getElementById('send-btn').disabled=false;inp.focus();
 }
 
+// ── MEAL INGREDIENTS DATABASE ──
+const MEAL_INGREDIENTS = {
+  // Smoker
+  's0': ['Whole chickens x2 (~5-6 lbs each)','Smoked paprika','Garlic powder','Onion powder','Brown sugar','Black pepper','Kosher salt','Apple or cherry wood chips'],
+  's1': ['Beef brisket flat (3-4 lbs)','Coarse black pepper','Kosher salt','Garlic powder','Smoked paprika','Oak or hickory wood chips'],
+  's2': ['Chicken leg quarters x6','Olive oil','Garlic powder','Onion powder','Smoked paprika','Dried thyme','Apple wood chips'],
+  's3': ['Beef chuck roast (3-4 lbs)','Cumin','Garlic powder','Smoked paprika','Onion powder','Brown sugar','Beef broth','Hickory wood chips'],
+  's4': ['Chicken wings (3-4 lbs)','Baking powder','Garlic powder','Smoked paprika','Butter (4 tbsp)','Fresh garlic','Fresh parsley','Hickory wood chips'],
+  's5': ['Beef tri-tip (2-3 lbs)','Kosher salt','Black pepper','Garlic powder','Onion powder','Smoked paprika','Cumin','Oak wood chips'],
+  's6': ['Chicken thighs (2 lbs)','Honey (3 tbsp)','Soy sauce (2 tbsp)','Garlic (4 cloves)','Olive oil','Apple wood chips'],
+  's7': ['Beef back ribs (2 racks)','Brown sugar','Smoked paprika','Garlic powder','Onion powder','Black pepper','Cumin','Apple juice','Butter','Oak or hickory wood chips'],
+  // Crockpot
+  'c0': ['Beef chuck roast (3 lbs)','Beef broth (1 cup)','Onion soup mix (1 packet)','Carrots (4)','Potatoes (4)','Celery (2 stalks)'],
+  'c1': ['Chicken thighs (2 lbs)','Chicken broth (1 cup)','Mild taco seasoning (1 packet)','Lime (1)','Flour tortillas','Shredded cheese','Sour cream','Mild salsa'],
+  'c2': ['Ground beef (1.5 lbs)','Diced tomatoes (2 cans)','Kidney beans (1 can)','Black beans (1 can)','Mild chili seasoning (1 packet)','Cumin','Garlic powder','Beef broth (½ cup)','Shredded cheese','Sour cream'],
+  'c3': ['Chicken breasts (1.5 lbs)','Diced tomatoes (2 cans)','Black beans (1 can)','Chicken broth (1 cup)','Frozen corn (1 cup)','Mild taco seasoning','Garlic powder','Cream cheese (¼ cup)','Shredded cheese','Tortilla chips'],
+  'c4': ['Beef stew meat (1.5 lbs)','Carrots (3)','Potatoes (3)','Celery (2 stalks)','Onion (1)','Beef broth (2 cups)','Worcestershire sauce','Tomato paste','Garlic powder','Dried thyme','Cornstarch'],
+  'c5': ['Chicken breasts (1.5 lbs)','Cream of chicken soup (1 can)','Chicken broth (1 cup)','Long grain white rice (1 cup)','Garlic powder','Onion powder','Frozen peas (1 cup)','Parmesan cheese'],
+  'c6': ['Beef chuck roast (2 lbs)','Beef broth (1 cup)','Italian dressing seasoning (1 packet)','Garlic powder','Dried oregano','Dried basil','Hoagie rolls','Provolone cheese slices'],
+  'c7': ['Chicken breasts (1.5 lbs)','Crushed tomatoes (2 cans)','Chicken broth (2 cups)','Garlic powder','Italian seasoning','Onion powder','Ditalini or small shell pasta (1 cup)','Parmesan cheese'],
+  // Weeknight dinners
+  'd0': ['Ground beef (1 lb)','Marinara sauce (1 jar)','Pasta (1 lb)','Parmesan cheese','Italian seasoning','Garlic bread'],
+  'd1': ['Ground beef (1 lb)','Mild taco seasoning (1 packet)','Flour tortillas','Shredded cheese','Sour cream','Mild salsa','Shredded lettuce'],
+  'd2': ['Chicken thighs (1.5 lbs)','Broccoli florets','Olive oil','Garlic powder','Smoked paprika','Garlic bread or rice packets'],
+  'd3': ['Leftover smoked chicken or beef','Shredded cheese','Flour tortillas','Sour cream','Mild salsa'],
+  'd4': ['Chicken breasts (1.5 lbs)','Honey (3 tbsp)','Soy sauce (3 tbsp)','Garlic (3 cloves)','Frozen stir fry vegetables','Cornstarch','Microwave rice packets'],
+  'd5': ['Costco lasagna (1 — from freezer)','Garlic bread','Pasta salad ingredients'],
+  'd6': ['Sirloin or flank steak (1 lb)','Broccoli florets','Soy sauce (3 tbsp)','Honey (2 tbsp)','Garlic (1 tsp)','Cornstarch','Microwave rice packets'],
+  'd7': ['Chicken breasts (1.5 lbs)','Pasta (1 lb)','Butter (3 tbsp)','Garlic (4 cloves)','Chicken broth (½ cup)','Heavy cream (¼ cup)','Parmesan cheese'],
+  'd8': ['Chicken breasts (1.5 lbs)','Italian breadcrumbs','Eggs (2)','Parmesan cheese','Marinara sauce (½ jar)','Shredded mozzarella','Pasta or garlic bread'],
+  'd9': ['Ground beef (1 lb)','Mild taco seasoning','Microwave rice packets','Black beans (1 can)','Shredded cheese','Sour cream','Mild salsa','Frozen corn'],
+  'd10': ['Chicken breasts (1.5 lbs)','Bell peppers (2)','Onion (1)','Cumin','Garlic powder','Onion powder','Smoked paprika','Flour tortillas or rice','Sour cream','Shredded cheese'],
+  'd11': ['Ziti pasta (1 lb)','Ground beef or mild Italian sausage (1 lb)','Marinara sauce (1 jar)','Cream cheese (½ cup)','Shredded mozzarella','Parmesan cheese','Garlic bread'],
+  'd12': ['Chicken thighs (1.5 lbs)','Mushrooms (sliced)','Garlic (4 cloves)','Butter (3 tbsp)','Chicken broth (½ cup)','Microwave rice packets'],
+  'd13': ['Mild Italian sausage (1 lb)','Bell peppers (2)','Onion (1)','Marinara sauce (½ jar)','Pasta (1 lb)','Olive oil','Parmesan cheese'],
+  'd14': ['Smoked chicken (leftover)','Mild enchilada sauce (1 can)','Flour tortillas','Shredded cheese','Sour cream','Mild salsa'],
+  'd15': ['Chicken breasts (1.5 lbs)','Garlic butter','Lemon (1)','Dried thyme','Microwave rice packets','Broccoli or green beans'],
+};
+
+// Always-stock staples added to every grocery list
+const STAPLES = [
+  'Eggs (2 dozen)','Milk','Greek yogurt (6-pack)','Protein bars (box of 12)','Cereal',
+  'Bananas','Peanut butter','Sparkling water (LaCroix/Bubly)','Garlic bread / Italian bread',
+  'Garlic butter','Microwave rice packets','Shredded cheese','Sour cream','Mild salsa',
+  'Olive oil','Kosher salt','Black pepper','Garlic powder','Onion powder',
+  'Mountain Dew (1x 12oz per day max)'
+];
+
+// ── MEAL SELECTION STATE ──
+function loadMealSelections(){try{return JSON.parse(localStorage.getItem('meal_selections_'+getWeekNum()))||{};}catch{return{};}}
+function saveMealSelections(s){try{localStorage.setItem('meal_selections_'+getWeekNum(),JSON.stringify(s));}catch{}}
+function loadGroceryChecked(){try{return JSON.parse(localStorage.getItem('grocery_checked_'+getWeekNum()))||{};}catch{return{};}}
+function saveGroceryChecked(c){try{localStorage.setItem('grocery_checked_'+getWeekNum(),JSON.stringify(c));}catch{}}
+
+function toggleMeal(id){
+  const sel=loadMealSelections();sel[id]=!sel[id];saveMealSelections(sel);
+  renderMeals();
+}
+function toggleGroceryItem(item){
+  const checked=loadGroceryChecked();checked[item]=!checked[item];saveGroceryChecked(checked);
+  renderGrocery();
+}
+
+function renderMeals(){
+  const wk=getWeekNum();
+  const sel=loadMealSelections();
+  const wi=(wk-1)%8;
+  document.getElementById('meals-week-label').textContent='Week '+wk+' of 8 — tap meals to add to grocery list';
+
+  // Smoker
+  const smoker=SMOKER_ROTATION[wi];
+  const smokerChecked=!!sel['s'+wi];
+  let html='<div class="meal-select-item" onclick="toggleMeal(\'s'+wi+'\')">';
+  html+='<div class="meal-checkbox'+(smokerChecked?' checked':'')+'"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0a1628" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
+  html+='<div class="meal-select-info"><div class="meal-select-title">🔥 '+smoker.title+'</div><div class="meal-select-sub">Saturday smoker · '+smoker.detail+'</div></div></div>';
+
+  // Crockpot
+  const crockpot=CROCKPOT_ROTATION[wi];
+  const cpChecked=!!sel['c'+wi];
+  html+='<div class="meal-select-item" onclick="toggleMeal(\'c'+wi+'\')">';
+  html+='<div class="meal-checkbox'+(cpChecked?' checked':'')+'"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0a1628" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
+  html+='<div class="meal-select-info"><div class="meal-select-title">🥘 '+crockpot.title+'</div><div class="meal-select-sub">Sunday crockpot · '+crockpot.detail+'</div></div></div>';
+
+  document.getElementById('meals-content').innerHTML=html;
+
+  // Weeknight dinners with checkboxes + recipes
+  const dhtml=DINNERS.map((d,i)=>{
+    const checked=!!sel['d'+i];
+    return '<div style="margin-bottom:2px">'+
+      '<div class="meal-select-item" onclick="toggleMeal(\'d'+i+'\')">'+
+      '<div class="meal-checkbox'+(checked?' checked':'')+'"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0a1628" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'+
+      '<div class="meal-select-info"><div class="meal-select-title">'+d.name+'</div><div class="meal-select-sub">'+d.time+'</div></div></div>'+
+      '<button class="recipe-toggle" onclick="togRecipe(\'d'+i+'\')" style="margin-left:32px">Recipe ↓</button>'+
+      '<div class="recipe-panel" id="rp-d'+i+'">'+d.steps.map((s,si)=>'<div class="recipe-step"><span class="rs-num">'+(si+1)+'.</span><span>'+s+'</span></div>').join('')+'</div>'+
+      '</div>';
+  }).join('');
+  document.getElementById('dinners-content').innerHTML=dhtml;
+
+  // Update grocery badge
+  const selCount=Object.values(loadMealSelections()).filter(v=>v).length;
+  const shopBtn=document.querySelector('.nav-btn[onclick="show(\'grocery\')"]');
+  if(shopBtn)shopBtn.style.color=selCount>0?'var(--accent)':'';
+}
+
+function buildGroceryList(){
+  const sel=loadMealSelections();
+  const items=new Map(); // item -> count
+  const add=(arr)=>arr.forEach(item=>{items.set(item,(items.get(item)||0)+1);});
+  Object.entries(sel).forEach(([k,v])=>{if(v&&MEAL_INGREDIENTS[k])add(MEAL_INGREDIENTS[k]);});
+  // Always add staples
+  add(STAPLES);
+  return items;
+}
+
+function renderGrocery(){
+  const items=buildGroceryList();
+  const checked=loadGroceryChecked();
+  const selCount=Object.values(loadMealSelections()).filter(v=>v).length;
+
+  if(selCount===0){
+    document.getElementById('grocery-list').innerHTML='<div style="font-size:13px;color:var(--text3);font-style:italic;font-family:\'DM Serif Display\',Georgia,serif;padding:8px 0">Select meals in the Meals tab first — your grocery list will build automatically.</div>';
+    document.getElementById('grocery-summary').textContent='No meals selected yet';
+    return;
+  }
+
+  const total=items.size;const checkedCount=Array.from(items.keys()).filter(k=>checked[k]).length;
+  document.getElementById('grocery-summary').textContent=checkedCount+' of '+total+' items in cart';
+
+  // Split into meal ingredients vs staples
+  const mealItems=[];const stapleItems=[];
+  items.forEach((count,item)=>{
+    if(STAPLES.includes(item))stapleItems.push({item,count});
+    else mealItems.push({item,count});
+  });
+
+  let html='';
+  if(mealItems.length>0){
+    html+='<div class="grocery-section">For your selected meals</div>';
+    html+=mealItems.map(({item,count})=>{
+      const isChecked=!!checked[item];
+      return '<div class="grocery-item" onclick="toggleGroceryItem(\''+item.replace(/'/g,"\\'")+'\')">'+'<div class="grocery-check'+(isChecked?' checked':'')+'"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'+'<span class="grocery-name'+(isChecked?' checked':'')+'">'+item+'</span>'+(count>1?'<span class="grocery-count">×'+count+'</span>':'')+'</div>';
+    }).join('');
+  }
+  if(stapleItems.length>0){
+    html+='<div class="grocery-section">Weekly staples</div>';
+    html+=stapleItems.map(({item})=>{
+      const isChecked=!!checked[item];
+      return '<div class="grocery-item" onclick="toggleGroceryItem(\''+item.replace(/'/g,"\\'")+'\')">'+'<div class="grocery-check'+(isChecked?' checked':'')+'"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'+'<span class="grocery-name'+(isChecked?' checked':'')+'">'+item+'</span>'+'</div>';
+    }).join('');
+  }
+  document.getElementById('grocery-list').innerHTML=html;
+}
+
+function clearCheckedGrocery(){saveGroceryChecked({});renderGrocery();}
+function clearAllGrocery(){saveMealSelections({});saveGroceryChecked({});renderMeals();renderGrocery();}
+
 initToday();initTaper();renderHabits();
 setInterval(()=>{if(document.getElementById('screen-habits').classList.contains('active'))renderHabits();},60000);
 </script>
+</body>
+</html>
+  <div class="header">
+    <div class="header-row">
+      <div><div class="htitle">Grocery List</div><div class="hsub" id="grocery-summary">Select meals first</div></div>
+      <div class="kbadge"><div class="kdot"></div><span class="kname">Kevin</span></div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;padding:0 16px 10px;flex-shrink:0">
+    <button onclick="clearCheckedGrocery()" style="flex:1;padding:8px;background:var(--bg3);color:var(--text2);border:.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer">Clear checked</button>
+    <button onclick="clearAllGrocery()" style="flex:1;padding:8px;background:var(--bg3);color:var(--text3);border:.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer">Reset list</button>
+  </div>
+  <div class="scroll" style="padding-top:0">
+    <div class="card"><div id="grocery-list"><div style="font-size:13px;color:var(--text3);font-style:italic;font-family:'DM Serif Display',Georgia,serif;padding:8px 0">Select meals in the Meals tab first.</div></div></div>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn" onclick="show('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
+    <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
+    <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
+    <button class="nav-btn active" onclick="show('grocery')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Shop</button>
+    <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
+    <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
+  </nav>
+</div>
+
 </body>
 </html>
