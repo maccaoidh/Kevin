@@ -11,15 +11,15 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{--bg:#0a1628;--bg2:#111f38;--bg3:#172540;--accent:#1fd48a;--accent2:#0fb872;--text:#e8f0fe;--text2:#8fa8c8;--text3:#4a6080;--card:#131e32;--border:rgba(31,212,138,0.15);--danger:#ff6b6b;--warn:#ffa94d;--radius:16px;--fs:var(--font-body,'DM Sans',system-ui,sans-serif)}
+:root{--bg:#0a1628;--bg2:#111f38;--bg3:#172540;--accent:#1fd48a;--accent2:#0fb872;--text:#e8f0fe;--text2:#8fa8c8;--text3:#4a6080;--card:#131e32;--border:rgba(31,212,138,0.15);--danger:#ff6b6b;--warn:#ffa94d;--radius:16px}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased}
 #app{height:100vh;height:100dvh;display:flex;flex-direction:column;max-width:430px;margin:0 auto;position:relative;overflow:hidden}
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .2s;overflow:hidden}
 .screen.active{opacity:1;pointer-events:all}
 .nav{display:flex;background:var(--bg2);border-top:.5px solid var(--border);padding:4px 0 max(4px,env(safe-area-inset-bottom));flex-shrink:0;z-index:10}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;background:none;border:none;cursor:pointer;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;letter-spacing:.03em;transition:color .15s}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px;background:none;border:none;cursor:pointer;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;transition:color .15s}
 .nav-btn.active{color:var(--accent)}
-.nav-btn svg{width:20px;height:20px}
+.nav-btn svg{width:19px;height:19px}
 .header{padding:14px 20px 10px;padding-top:max(14px,env(safe-area-inset-top));flex-shrink:0;background:var(--bg)}
 .header-row{display:flex;align-items:center;justify-content:space-between}
 .htitle{font-family:'DM Serif Display',Georgia,serif;font-size:24px;color:var(--text)}
@@ -35,9 +35,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 8px;border-radius:8px;margin-bottom:6px}
 .tl-row{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:.5px solid rgba(255,255,255,.05)}
 .tl-row:last-child{border-bottom:none}
-.tl-dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0}
 .tl-time{font-size:11px;color:var(--text3);min-width:50px;padding-top:1px;font-weight:300}
 .tl-text{font-size:12px;color:var(--text2)}
+.tl-dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0}
 .day-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(31,212,138,.1);border:.5px solid var(--border);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--accent);font-weight:500;margin-bottom:14px}
 .ex-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:.5px solid rgba(255,255,255,.05)}
 .ex-row:last-child{border-bottom:none}
@@ -53,8 +53,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .bike-row:last-child{border-bottom:none}
 .bk{color:var(--text2)}
 .bv{color:var(--accent);font-weight:500;text-align:right;max-width:58%}
-
-/* HABIT TRACKER */
+/* HABITS */
 .habit-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:.5px solid rgba(255,255,255,.05);cursor:pointer}
 .habit-item:last-child{border-bottom:none}
 .habit-check{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--text3);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
@@ -67,16 +66,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .streak-bar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin:8px 0 4px}
 .streak-fill{height:100%;border-radius:3px;background:var(--accent);transition:width .4s ease}
 .score-ring{width:70px;height:70px;flex-shrink:0}
-.week-dots{display:flex;gap:6px;margin-top:8px}
 .week-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0}
 .wd-done{background:rgba(31,212,138,.2);color:var(--accent)}
 .wd-miss{background:rgba(255,107,107,.15);color:#ff9999}
 .wd-today{background:var(--accent);color:#0a1628}
 .wd-future{background:var(--bg3);color:var(--text3)}
 .evening-prompt{background:rgba(31,212,138,.08);border:.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px}
-.ep-title{font-family:'DM Serif Display',Georgia,serif;font-size:16px;color:var(--text);margin-bottom:4px}
-.ep-sub{font-size:12px;color:var(--text2)}
-
 /* OURA */
 .oura-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
 .ofield label{display:block;font-size:10px;color:var(--text3);margin-bottom:5px;font-weight:500;letter-spacing:.05em}
@@ -96,7 +91,15 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .checkin-resp{background:var(--bg3);border:.5px solid var(--border);border-radius:12px;padding:13px;margin-top:10px;font-size:13px;color:var(--text2);line-height:1.65;font-family:'DM Serif Display',Georgia,serif;font-style:italic}
 .feel-wrap{display:flex;gap:6px;flex-wrap:wrap}
 .feel-btn{white-space:nowrap;padding:5px 11px;border-radius:20px;border:.5px solid var(--border);background:var(--card);color:var(--text2);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer}
-
+/* OURA HISTORY */
+.oura-hist-row{display:flex;gap:8px;align-items:center;padding:7px 0;border-bottom:.5px solid rgba(255,255,255,.05);font-size:12px}
+.oura-hist-row:last-child{border-bottom:none}
+.oh-date{color:var(--text3);min-width:56px;font-weight:300}
+.oh-stats{color:var(--text2);flex:1}
+.oh-score{font-weight:500;margin-left:auto}
+.oh-score.good{color:var(--accent)}
+.oh-score.warn{color:var(--warn)}
+.oh-score.bad{color:var(--danger)}
 /* CHAT */
 .chat-msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px 14px;display:flex;flex-direction:column;gap:8px}
 .chat-msgs::-webkit-scrollbar{display:none}
@@ -122,7 +125,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .tdot:nth-child(2){animation-delay:.2s}
 .tdot:nth-child(3){animation-delay:.4s}
 @keyframes td{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
-
 /* TAPER */
 .tw{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:.5px solid rgba(255,255,255,.05)}
 .tw:last-child{border-bottom:none}
@@ -132,6 +134,21 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .twnum.future{background:var(--bg3);color:var(--text3)}
 .pbar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin:10px 0 3px}
 .pfill{height:100%;border-radius:3px;background:var(--accent);transition:width .5s ease}
+/* MEALS */
+.meal-week{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
+.meal-week::-webkit-scrollbar{display:none}
+.meal-day-btn{flex-shrink:0;padding:6px 14px;border-radius:20px;border:.5px solid var(--border);background:var(--card);color:var(--text2);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
+.meal-day-btn.active{background:var(--accent);color:#0a1628;border-color:var(--accent);font-weight:500}
+.recipe-toggle{font-size:10px;color:var(--text3);background:var(--bg3);border:.5px solid var(--border);border-radius:8px;padding:2px 8px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:6px;display:inline-block}
+.recipe-panel{display:none;background:var(--bg3);border-radius:10px;padding:9px 11px;margin-top:8px;font-size:11px;color:var(--text2);line-height:1.7;border-left:2px solid var(--accent)}
+.recipe-panel.open{display:block}
+.recipe-step{margin-bottom:3px;display:flex;gap:5px}
+.rs-num{color:var(--accent);font-weight:500;flex-shrink:0;min-width:14px}
+.meal-card-inner{padding:8px 0;border-bottom:.5px solid rgba(255,255,255,.05)}
+.meal-card-inner:last-child{border-bottom:none}
+.mc-label{font-size:10px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.mc-title{font-size:13px;color:var(--text);font-weight:500}
+.mc-sub{font-size:11px;color:var(--text3);margin-top:1px}
 </style>
 </head>
 <body>
@@ -172,6 +189,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="nav-btn active" onclick="show('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
     <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
     <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
@@ -181,7 +199,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 <div class="screen" id="screen-habits">
   <div class="header">
     <div class="header-row">
-      <div><div class="htitle">Daily Habits</div><div class="hsub" id="habits-date"></div></div>
+      <div><div class="htitle" id="habits-greeting">Daily Habits</div><div class="hsub" id="habits-date"></div></div>
       <div class="kbadge"><div class="kdot"></div><span class="kname">Kevin</span></div>
     </div>
   </div>
@@ -201,30 +219,24 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         </div>
       </div>
     </div>
-
     <div id="evening-prompt" class="evening-prompt" style="display:none">
-      <div class="ep-title">Evening check-in</div>
-      <div class="ep-sub">It's 8pm — time to log your day and start your reading hour. How did today go?</div>
+      <div style="font-family:'DM Serif Display',Georgia,serif;font-size:16px;color:var(--text);margin-bottom:4px">Evening check-in</div>
+      <div style="font-size:12px;color:var(--text2)">It's 8pm — time to log your day and start your reading hour.</div>
       <button class="sbtn" style="margin-top:10px;padding:10px" onclick="startEveningCheckin()">Log today with Kevin ↗</button>
     </div>
-
-    <div class="card">
-      <div class="clabel">Tap to mark complete</div>
-      <div id="habit-list"></div>
-    </div>
-
+    <div class="card"><div class="clabel">Tap to mark complete</div><div id="habit-list"></div></div>
     <div class="card">
       <div class="clabel">This week</div>
-      <div class="week-dots" id="week-dots"></div>
+      <div style="display:flex;gap:6px;margin-top:4px" id="week-dots"></div>
       <div style="font-size:11px;color:var(--text3);margin-top:8px" id="week-summary"></div>
     </div>
-
     <button class="sbtn" onclick="resetDay()" style="background:var(--bg3);color:var(--text2);margin-bottom:4px">Reset today's habits</button>
   </div>
   <nav class="nav">
     <button class="nav-btn" onclick="show('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
     <button class="nav-btn active" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
     <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
@@ -236,6 +248,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <div class="scroll">
     <div class="card">
       <div class="clabel">Oura Ring</div>
+      <button class="sbtn" id="fetch-oura-btn" onclick="fetchOura()" style="background:var(--bg3);color:var(--accent);border:.5px solid var(--border);margin-bottom:10px;padding:10px">Fetch Oura data automatically ↓</button>
+      <div id="oura-fetch-status" style="font-size:11px;color:var(--text3);text-align:center;margin-bottom:8px;display:none"></div>
       <div class="oura-grid">
         <div class="ofield"><label>READINESS</label><input type="number" id="readiness" placeholder="e.g. 74" min="0" max="100"></div>
         <div class="ofield"><label>SLEEP SCORE</label><input type="number" id="sleep-score" placeholder="e.g. 68" min="0" max="100"></div>
@@ -256,18 +270,55 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <button class="feel-btn chip" data-val="rough" onclick="selFeel(this)">Rough</button>
       </div>
     </div>
-    <button class="sbtn" id="fetch-oura-btn" onclick="fetchOura()" style="background:var(--bg3);color:var(--accent);border:.5px solid var(--border);margin-bottom:8px">Fetch Oura data automatically ↓</button>
-    <div id="oura-fetch-status" style="font-size:11px;color:var(--text3);text-align:center;margin-bottom:8px;display:none"></div>
     <button class="sbtn" id="checkin-btn" onclick="submitCheckin()" disabled>Get Kevin's Assessment</button>
     <div id="checkin-result" style="display:none">
-      <div class="card" style="margin-top:10px"><div class="clabel">Last check-in</div><div id="checkin-metrics"></div></div>
+      <div class="card" style="margin-top:10px"><div class="clabel">Today's reading</div><div id="checkin-metrics"></div></div>
       <div class="checkin-resp" id="checkin-resp"></div>
+    </div>
+    <div class="card" style="margin-top:4px" id="oura-history-card">
+      <div class="clabel">Last 7 days</div>
+      <div id="oura-history"></div>
     </div>
   </div>
   <nav class="nav">
     <button class="nav-btn" onclick="show('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
     <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn active" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
+    <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
+    <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
+  </nav>
+</div>
+
+<!-- MEALS -->
+<div class="screen" id="screen-meals">
+  <div class="header"><div class="htitle">Meal Plan</div><div class="hsub" id="meals-week-label">8-week rotation</div></div>
+  <div class="scroll">
+    <div class="card">
+      <div class="clabel">This week's plan</div>
+      <div id="meals-content"></div>
+    </div>
+    <div class="card">
+      <div class="clabel">Weeknight quick dinners — tap for recipe</div>
+      <div id="dinners-content"></div>
+    </div>
+    <div class="card">
+      <div class="clabel">Always keep stocked</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        Proteins: chicken thighs, chicken breasts, ground beef, eggs, chuck roast (alternating weeks)<br>
+        Breakfast: protein bars, cereal, milk, Greek yogurt, bananas, peanut butter<br>
+        Dinner: tortillas, pasta, marinara, taco seasoning, rice packets, shredded cheese<br>
+        Sides: broccoli, green beans, coleslaw mix, frozen veg, garlic bread, parmesan<br>
+        Freezer: 1x Costco lasagna always — zero effort backup<br>
+        Drinks: sparkling water, electrolyte packets, 1x Mtn Dew morning only
+      </div>
+    </div>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn" onclick="show('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
+    <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
+    <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn active" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
     <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
@@ -287,16 +338,15 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="chip" onclick="sq('I just finished my session')">Log session</button>
     <button class="chip" onclick="sq('My back is aching — what should I do?')">Back aching</button>
     <button class="chip" onclick="sq('I skipped my workout today')">Missed workout</button>
-    <button class="chip" onclick="sq('How is my sleep improving based on my Oura data?')">Sleep progress</button>
+    <button class="chip" onclick="sq('What are my sleep trends this week?')">Sleep trends</button>
     <button class="chip" onclick="sq('What should I make for dinner tonight?')">Dinner idea</button>
-    <button class="chip" onclick="sq('What VeloCore program should I use today?')">Bike program</button>
     <button class="chip" onclick="sq('How is my Mountain Dew taper going?')">Taper check</button>
     <button class="chip" onclick="sq('Give me an honest assessment of my habits this week')">Week review</button>
   </div>
   <div class="chat-msgs" id="chat-msgs">
     <div class="msg assistant">
       <div class="mavatar">K</div>
-      <div class="mbubble">Hey. I'm Kevin.\n\nI know your full plan — Bowflex Xtreme 2 SE with all attachments, VeloCore bike, T8 fracture, Mountain Dew taper, meal rotation, and reading list.\n\nOpen me at 8pm to log your day. I'll be straight with you about how you're doing.</div>
+      <div class="mbubble">Hey. I'm Kevin — your coach. I track your Oura data and habit completion over time now, so I can spot trends and give you honest feedback.\n\nOpen me at 8pm to log your day.</div>
     </div>
   </div>
   <div class="cinput-row">
@@ -309,6 +359,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="nav-btn" onclick="show('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
     <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
     <button class="nav-btn active" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
@@ -334,6 +385,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <button class="nav-btn" onclick="show('today')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Today</button>
     <button class="nav-btn" onclick="show('habits')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Habits</button>
     <button class="nav-btn" onclick="show('oura')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="show('meals')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>Meals</button>
     <button class="nav-btn" onclick="show('chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Kevin</button>
     <button class="nav-btn active" onclick="show('taper')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Taper</button>
   </nav>
@@ -341,108 +393,186 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 </div>
 <script>
-const SP=`You are Kevin, a personal fitness coach and accountability partner. Be direct and honest — he asked for straight feedback. When he misses habits, tell him clearly but always give a path forward. Never shame — just facts and next steps. Keep responses concise for mobile.
+const SP=`You are Kevin, a personal fitness coach and accountability partner. Be direct and honest. Keep responses concise for mobile. Division Manager of infrastructure services.
 
-PROFILE: Division Manager, infrastructure services. Works 8am-4:30pm. Remote Mon/Fri, office Tue-Thu. Wife Susan, daughters Kathryn and CJ, dog. Dog walk with Susan 5:30-6:15pm daily — keystone habit.
+EQUIPMENT: Bowflex Xtreme 2 SE all attachments including preacher curl. Bowflex VeloCore bike.
 
-EQUIPMENT: Bowflex Xtreme 2 SE (all attachments including preacher curl). Bowflex VeloCore bike.
+PUSH DAY (Mon): Chest press pulleys BOTTOM hand grips sit AWAY. Shoulder press pulleys BOTTOM sit AWAY press overhead. Tricep pushdown pulley TOP V-bar face tower elbows pinned. Lateral raise pulleys BOTTOM single grip stand sideways.
+PULL DAY (Fri): Lat pulldown pulley TOP lat bar face tower wide grip stay upright. Seated row pulleys BOTTOM V-bar face tower neutral spine NEVER round back. Preacher curl pulleys BOTTOM straight bar arms over pad safest bicep option. Rear delt fly pulleys TOP cross cables face tower.
+VELOCORE P1: upright level 3-4 70-80rpm 100-120bpm. P2: level 5-6 intervals. P3: level 6-8 HIIT.
+T8: Do everything slow down when aches. Aching reduce 20% continue. Sharp pain stop call doctor.
 
-WORKOUT SCHEDULE: Mon/Fri remote — Bowflex 6:15-7:00am. Wed office — VeloCore bike 6:00-6:40am. Sat (phase 2+) — bike 6:30am. Sun (phase 2+) — light bike.
+SCHEDULE: Remote Mon/Fri Bowflex. Office Tue-Thu. Wed bike only. Wife Susan daughters Kathryn and CJ dog. Dog walk Susan 5:30-6:15pm daily keystone habit.
 
-PUSH DAY (Mon): Chest press, shoulder press, tricep pushdown, lateral raise. PULL DAY (Fri): Lat pulldown, seated row, preacher curl, rear delt fly. PHASES: P1 wks1-3: 2 sets 10-12 reps. P2 wks4-7: 3 sets. P3 wks8+: 3-4 sets progressive.
+HABITS: workout(scheduled days) breakfast lunch dog-walk water-64oz no-mtn-dew-after-4pm reading lights-out-10:30.
 
-BOWFLEX SETUP — PUSH: Chest press: pulleys BOTTOM, hand grips, sit AWAY from tower. Shoulder press: pulleys BOTTOM, hand grips, sit AWAY, press overhead. Tricep pushdown: pulley TOP, V-bar, face tower, elbows pinned. Lateral raise: pulleys BOTTOM, single grip, stand sideways.
-BOWFLEX SETUP — PULL: Lat pulldown: pulley TOP, lat bar, face tower, wide grip. Seated row: pulleys BOTTOM, V-bar, face tower, neutral spine — NEVER round back. Preacher curl: pulleys BOTTOM, straight bar, arms over pad — safest bicep option. Rear delt fly: pulleys TOP, cross cables, face tower.
-
-VELOCORE: P1 upright only level 3-4 70-80rpm 100-120bpm. P2 level 5-6 intervals 120-140bpm. P3 level 6-8 HIIT 140-155bpm.
-
-T8 FRACTURE: Doctor says do everything, slow down when it aches. Aching = reduce 20% and continue. Sharp pain = stop and call doctor. Preacher curl preferred for T8 safety.
-
-HABITS TO TRACK DAILY: workout (if scheduled), breakfast eaten, lunch eaten, dog walk with Susan, water 64oz+, Mountain Dew after 4pm avoided, reading done 8-9pm, lights out by 10:30pm.
-
-EVENING CHECK-IN (8pm): Ask about each habit honestly. If they missed things, say so directly with a path forward. Example: "You missed breakfast and lunch again — that's two days in a row. Your energy crashes are directly connected to this. Tomorrow: protein bar on the counter before you go to bed tonight so it's in your face in the morning."
-
-MOUNTAIN DEW TAPER: 630mg → 85mg over 8 weeks. Nothing after 4pm ever.
-
-NUTRITION — 8-WEEK ROTATION:
-SMOKER (Sat): Wk1 whole chickens 250F 3.5hr, Wk2 beef brisket 225F 8-10hr, Wk3 chicken leg quarters 250F 2.5hr, Wk4 chuck roast 250F 7-8hr, Wk5 chicken wings 250F 2hr+crisp, Wk6 beef tri-tip 225F 2-3hr, Wk7 honey garlic chicken thighs 275F 2hr, Wk8 beef back ribs 225F 5-6hr.
-CROCKPOT (Sun before dog walk): Wk1 Susan's pot roast, Wk2 pulled chicken tacos, Wk3 beef chili, Wk4 chicken tortilla soup, Wk5 beef and vegetable stew, Wk6 chicken and rice casserole, Wk7 Italian beef sandwiches, Wk8 chicken parmesan soup.
-QUICK DINNERS: Pasta meat sauce, ground beef tacos, sheet pan chicken, chicken parm, quesadillas, honey garlic stir fry, Costco lasagna (always in freezer), beef broccoli, chicken pasta garlic butter, enchilada bake, steamed chicken rice, baked ziti, beef rice bowls, skillet chicken mushrooms, sausage peppers pasta, chicken fajita bowls.
-Susan dislikes: pork, fish. Both prefer mild flavors — garlic, herbs, smoky, butter sauces.
-
-SLEEP TARGET: 7+ hrs, 90 min REM. Uses Oura ring daily.
-READING: 1hr at 8pm nightly. Currently: So Good They Can't Ignore You → Atomic Habits (May 25) → Grit (Jun 15) → The Phoenix Project (Jul 6) → and so on.
-COACHING STYLE: Straight talk, path forward always, never shame. Celebrate wins. If a habit is missed multiple days in a row, escalate the directness.`;
+TAPER: 630mg to 85mg 8 weeks. Nothing after 4pm ever.
+NUTRITION: No pork no fish. Mild flavors. Smoker Sat chickens or beef. Crockpot Sun before dog walk. Susan makes pot roast. Costco lasagna in freezer always. Protein breakfast 400+ cal lunch 64oz water.
+SLEEP TARGET: 7+ hrs 90 min REM. Oura ring.
+READING: 1hr 8pm nightly. Atomic Habits May 25 next.
+COACHING: Straight talk path forward always. Celebrate wins. Escalate if missed multiple days.
+When given Oura history or habit history analyze trends and give specific actionable feedback.`;
 
 const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
+const SMOKER_ROTATION=[
+  {week:1,title:'Whole chickens x2',detail:'250°F · 3.5 hrs · Cherry or apple wood',steps:['Pat dry. Rub: smoked paprika, garlic powder, onion powder, brown sugar, black pepper, salt.','Smoker to 250°F, chickens breast-side up.','Smoke until 165°F internal in thigh — about 3.5 hrs.','Rest 15 min. Pairs with pasta salad, garlic toast.']},
+  {week:2,title:'Beef brisket flat',detail:'225°F · 8-10 hrs · Oak or hickory',steps:['Trim fat cap to ¼ inch. Rub: coarse pepper, kosher salt, garlic powder, smoked paprika.','Smoker to 225°F fat-side up. Start early.','Wrap in butcher paper at 165°F internal (~5-6 hrs).','Continue to 200-205°F. Rest 1 hr. Slice against grain.']},
+  {week:3,title:'Chicken leg quarters x6',detail:'250°F · 2.5 hrs · Apple wood',steps:['Season: olive oil, garlic powder, onion powder, smoked paprika, salt, pepper, thyme.','Smoker to 250°F skin-side up.','Smoke to 175°F internal — about 2.5 hrs.','Rest 10 min. Pairs with pasta salad, steamed corn.']},
+  {week:4,title:'Beef chuck roast — shredded',detail:'250°F · 7-8 hrs · Hickory',steps:['Rub: cumin, garlic powder, smoked paprika, onion powder, salt, pepper, brown sugar.','Smoker to 250°F. Smoke to 165°F internal (~4-5 hrs).','Wrap in foil with ¼ cup beef broth. Continue to 200-205°F.','Rest 30 min. Shred with forks. Use for tacos, quesadillas, bowls all week.']},
+  {week:5,title:'Smoked chicken wings',detail:'250°F · 2 hrs + crisp · Hickory',steps:['Pat wings completely dry. Season: baking powder, garlic powder, smoked paprika, salt, pepper.','Smoker to 250°F. Smoke 2 hrs.','Crank to 425°F or finish in oven 15 min to crisp skin.','Toss in garlic butter sauce (butter + garlic + parsley). Saturday night treat.']},
+  {week:6,title:'Beef tri-tip',detail:'225°F · 2-3 hrs · Oak',steps:['Rub: salt, pepper, garlic powder, onion powder, smoked paprika, cumin.','Smoker to 225°F. Smoke to 130-135°F internal for medium — about 2 hrs.','Rest 15 min. Slice AGAINST the grain — two grain directions, find the seam.','Pairs with garlic toast, roasted potatoes, green beans.']},
+  {week:7,title:'Honey garlic chicken thighs',detail:'275°F · 1.5-2 hrs · Apple',steps:['Marinate 2+ hrs: honey, minced garlic, soy sauce, olive oil, salt, pepper.','Smoker to 275°F skin-side up.','Smoke to 175°F internal — about 2 hrs. Brush extra marinade at 1 hr mark.','Rest 10 min. Pairs with rice, pasta salad, garlic toast.']},
+  {week:8,title:'Beef back ribs',detail:'225°F · 5-6 hrs · Oak or hickory',steps:['Remove silver skin. Rub: brown sugar, smoked paprika, garlic powder, onion powder, pepper, salt, cumin.','Smoker to 225°F bone-side down.','After 3 hrs wrap in foil with butter and apple juice. Return 2 more hrs.','Unwrap 30 more min. Done when meat pulls back ½ inch from bone.']}
+];
+
+const CROCKPOT_ROTATION=[
+  {week:1,title:"Susan's pot roast",detail:'Low · 7-8 hrs',steps:["Susan's recipe — defer to hers. Set before the dog walk, eat when you get home.",'Backup: chuck roast + beef broth + onion soup mix + carrots + potatoes + celery. Low 7-8 hrs.']},
+  {week:2,title:'Pulled chicken tacos',detail:'Low · 4-5 hrs',steps:['2 lbs chicken thighs + chicken broth + mild taco seasoning + lime juice + garlic powder + cumin.','Low 4-5 hrs. Shred in pot.','Serve in flour tortillas with shredded cheese, sour cream, mild salsa.']},
+  {week:3,title:'Beef chili',detail:'Low · 6 hrs',steps:['Brown 1.5 lbs ground beef. Drain.','Add: 2 cans diced tomatoes, kidney beans, black beans, mild chili seasoning, cumin, garlic powder, beef broth.','Low 6 hrs. Top with cheese, sour cream. Serve with garlic toast.']},
+  {week:4,title:'Chicken tortilla soup',detail:'Low · 4-5 hrs',steps:['1.5 lbs chicken breasts + 2 cans diced tomatoes + black beans + chicken broth + corn + mild taco seasoning + garlic.','Low 4-5 hrs. Shred chicken.','Stir in cream cheese. Top with cheese, sour cream, crushed chips.']},
+  {week:5,title:'Beef and vegetable stew',detail:'Low · 7-8 hrs',steps:['1.5 lbs beef stew meat + carrots + potatoes + celery + onion + beef broth + Worcestershire + tomato paste + garlic + thyme.','Low 7-8 hrs.','Thicken with cornstarch + water. Serve with garlic toast.']},
+  {week:6,title:'Chicken and rice casserole',detail:'Low · 3.5-4 hrs',steps:['1.5 lbs chicken + cream of chicken soup + chicken broth + uncooked rice + garlic + onion powder.','Low 3.5-4 hrs. Do not overcook — rice gets mushy.','Add frozen peas last 20 min. Top with parmesan. Garlic toast.']},
+  {week:7,title:'Italian beef sandwiches',detail:'Low · 8 hrs',steps:['2 lb chuck roast + beef broth + Italian dressing seasoning + garlic + oregano + basil.','Low 8 hrs. Shred in juices.','Serve on hoagie rolls with provolone. Spoon cooking juices on bread.']},
+  {week:8,title:'Chicken parmesan soup',detail:'Low · 4-5 hrs',steps:['1.5 lbs chicken + crushed tomatoes + chicken broth + garlic + Italian seasoning + onion powder.','Low 4-5 hrs. Shred chicken.','Add small pasta last 30 min. Top with parmesan. Garlic toast.']}
+];
+
+const DINNERS=[
+  {name:'Pasta with meat sauce',time:'25 min',steps:['Boil pasta. Brown 1 lb ground beef, drain, add marinara jar, simmer 5 min.','Combine. Top with parmesan. Serve with garlic toast. Make double for lunch tomorrow.']},
+  {name:'Ground beef tacos',time:'20 min',steps:['Brown 1 lb ground beef. Add taco seasoning + ⅔ cup water, simmer 3 min.','Warm tortillas. Set out cheese, sour cream, mild salsa. Build your own.']},
+  {name:'Sheet pan chicken + vegetables',time:'25 min',steps:['Preheat 425°F. Toss chicken thighs and broccoli with olive oil, garlic powder, salt, pepper, smoked paprika.','Roast 25 min until chicken 165°F internal. Serve with garlic toast.']},
+  {name:'Smoked meat quesadillas',time:'10 min',steps:['Leftover smoked chicken or beef + shredded cheese in flour tortilla.','Pan over medium heat 2-3 min per side. Sour cream and salsa on side.']},
+  {name:'Honey garlic chicken stir fry',time:'20 min',steps:['Slice chicken thin, cook in pan 5-6 min. Sauce: honey + soy sauce + garlic + cornstarch water.','Add frozen stir fry veg, 3 min. Pour sauce, toss 2 min. Serve over rice.']},
+  {name:'Costco lasagna',time:'55 min',steps:['Preheat 375°F. Cover with foil, bake 45 min. Remove foil, bake 10 more min.','Rest 10 min. Serve with garlic toast and pasta salad. Freezer backup — always keep one.']},
+  {name:'Beef and broccoli',time:'20 min',steps:['Slice sirloin thin, season, cook in hot pan 3-4 min. Remove. Steam broccoli 3 min.','Sauce: soy sauce + honey + garlic + cornstarch water. Add beef back, toss. Serve over rice.']},
+  {name:'Chicken pasta garlic butter',time:'25 min',steps:['Boil pasta. Cook sliced chicken in butter 5-6 min. Add garlic 1 min, then broth + cream, simmer 3 min.','Toss with drained pasta and parmesan. Garlic toast.']},
+  {name:'Baked chicken parmesan',time:'30 min',steps:['Preheat 400°F. Dip chicken in egg, coat in breadcrumbs + parmesan. Bake 20 min.','Top with marinara and mozzarella. Broil 2-3 min. Serve with pasta or garlic toast.']},
+  {name:'Beef rice bowls',time:'20 min',steps:['Brown ground beef with taco seasoning. Microwave rice 90 sec. Warm black beans.','Build bowls: rice + beef + beans + cheese + sour cream + mild salsa + corn.']},
+  {name:'Chicken fajita bowls',time:'25 min',steps:['Season chicken: cumin, garlic, onion powder, smoked paprika, salt, pepper — no chili.','Cook chicken, remove. Cook peppers and onions same pan. Serve over rice with sour cream and cheese.']},
+  {name:'Baked ziti',time:'30 min',steps:['Boil ziti al dente. Brown ground beef, add marinara.','Mix pasta + sauce + cream cheese. Baking dish. Top with mozzarella + parmesan. Bake 20 min at 375°F.']},
+  {name:'Skillet chicken mushrooms',time:'25 min',steps:['Cook seasoned chicken thighs in butter pan 4 min/side. Remove.','Add mushrooms + garlic, cook 3 min. Add broth + butter. Nestle chicken back, cover 10 min. Serve over rice.']},
+  {name:'Sausage and peppers pasta',time:'20 min',steps:['Boil pasta. Brown sliced mild Italian sausage 5-6 min.','Add bell peppers + onion, cook 5 min. Add marinara, simmer 3 min. Toss with pasta, top with parmesan.']},
+  {name:'Chicken enchilada bake',time:'25 min',steps:['Preheat 375°F. Mix shredded smoked chicken + mild enchilada sauce + cheese. Roll in tortillas.','Place in dish, pour remaining sauce + cheese on top. Bake 20 min. Sour cream and salsa.']},
+  {name:'Steamed chicken and rice',time:'25 min',steps:['Season chicken with garlic butter, lemon, salt, pepper, thyme.','Steam in food steamer 20-25 min to 165°F. Microwave rice 90 sec. Add steamed vegetables alongside.']}
+];
+
 const HABITS=[
-  {id:'workout',label:'Workout completed',sub:'Bowflex or VeloCore — scheduled days only',icon:'💪',days:[1,3,5]},
+  {id:'workout',label:'Workout completed',sub:'Bowflex or VeloCore — scheduled days',icon:'💪',days:[1,3,5]},
   {id:'breakfast',label:'Ate breakfast',sub:'Protein bar, cereal, eggs, or yogurt',icon:'🥚',days:'all'},
   {id:'lunch',label:'Ate lunch',sub:'400+ calories — no skipping',icon:'🥗',days:'all'},
   {id:'walk',label:'Dog walk with Susan',sub:'5:30–6:15 PM — every day',icon:'🐕',days:'all'},
   {id:'water',label:'64oz water',sub:'16oz with each meal + workout bottle',icon:'💧',days:'all'},
   {id:'taper',label:'No Mtn Dew after 4pm',sub:'Caffeine cutoff — non-negotiable',icon:'🥤',days:'all'},
   {id:'reading',label:'IT leadership reading',sub:'1 hour at 8:00 PM',icon:'📖',days:'all'},
-  {id:'sleep',label:'Lights out by 10:30',sub:'Protect your REM — Oura will show it',icon:'🌙',days:'all'}
+  {id:'sleep',label:'Lights out by 10:30',sub:'Protect your REM',icon:'🌙',days:'all'}
 ];
 
 const SETUP={
-  'Chest press':['Pulleys → BOTTOM','Attachment → single hand grips','Sit AWAY from tower, back flat on pad','Overhand grip at chest height','Press forward until arms nearly straight — return slowly','T8: keep back on pad — no arching'],
-  'Shoulder press':['Pulleys → BOTTOM','Attachment → single hand grips','Sit AWAY from tower, tall posture','Start handles at shoulder height, press overhead','Stop just short of lockout','T8: light weight — stop if spine feels compressed'],
-  'Tricep pushdown':['Pulley → TOP','Attachment → V-bar or short straight bar','Stand/sit FACING tower, 12 inches back','Overhand grip, elbows pinned to sides','Push down until arms straight, squeeze','T8: very low spinal load — safe exercise'],
+  'Chest press':['Pulleys → BOTTOM','Attachment → single hand grips','Sit AWAY from tower, back flat on pad','Overhand grip at chest height','Press forward until arms nearly straight — return slowly','T8: keep back on pad the whole time'],
+  'Shoulder press':['Pulleys → BOTTOM','Attachment → single hand grips','Sit AWAY from tower, tall posture','Start at shoulder height, press overhead','Stop just short of lockout','T8: light weight — stop if spine feels compressed'],
+  'Tricep pushdown':['Pulley → TOP','Attachment → V-bar or straight bar','Stand/sit FACING tower, 12 inches back','Overhand grip, elbows pinned to sides','Push down until arms straight, squeeze','T8: very low spinal load — safe'],
   'Lateral raise':['Pulleys → BOTTOM','Attachment → single hand grip, one arm at a time','Stand sideways to tower, working arm crosses body','Slight elbow bend, neutral grip','Raise arm to shoulder height — lower slowly','T8: light weight only'],
-  'Lat pulldown':['Pulley → TOP','Attachment → lat bar (long curved bar)','Sit FACING tower, feet flat on floor','Wide overhand grip, hands outside shoulders','Pull bar to upper chest leading with elbows','T8: stay upright — max 15 degree lean, no jerking'],
+  'Lat pulldown':['Pulley → TOP','Attachment → lat bar (long curved bar)','Sit FACING tower, feet flat on floor','Wide overhand grip outside shoulders','Pull bar to upper chest leading with elbows','T8: stay upright, max 15 degree lean'],
   'Seated row':['Pulleys → BOTTOM','Attachment → V-bar or hand grips','Sit FACING tower, feet flat, knees slightly bent','Neutral grip (palms facing each other)','Pull to lower chest, drive elbows back, squeeze shoulder blades','T8: CRITICAL — spine stays neutral. Stop if back rounds.'],
   'Preacher curl':['Attach preacher curl pad to frame','Pulleys → BOTTOM','Attachment → straight bar or EZ bar','Drape upper arms over pad — fully supported','Underhand shoulder-width grip','Curl to chin, squeeze, lower fully','T8: SAFEST bicep option — zero spinal load'],
-  'Rear delt fly':['Pulleys → TOP','Attachment → single hand grips — CROSS cables','Right hand takes left cable, left takes right','Stand/sit FACING tower, arms extended forward, slight elbow bend','Pull arms apart and back, squeeze rear shoulders','T8: low load — excellent for posture']
+  'Rear delt fly':['Pulleys → TOP','Attachment → single hand grips — CROSS cables','Right hand takes left cable, left takes right','Stand/sit FACING tower, arms extended forward','Slight elbow bend, palms facing each other','Pull arms apart and back, squeeze rear shoulders']
 };
 
-const VELOCORE={1:{mode:'Upright only (no lean — T8)',res:'Level 3–4',prog:'Manual or Scenic',dur:'40 min — 5 warm · 30 steady · 5 cool',rpm:'70–80 RPM',hr:'100–120 BPM conversational'},2:{mode:'Upright, try slight lean if back allows',res:'Level 5–6',prog:'Intervals — 2 min hard / 3 min easy',dur:'40–45 min',rpm:'80–90 RPM work intervals',hr:'120–140 BPM'},3:{mode:'Try full lean — assess T8 first',res:'Level 6–8 work / 3 recovery',prog:'Built-in HIIT or custom intervals',dur:'45 min (Sun: 25 min easy upright)',rpm:'85–95 RPM work',hr:'140–155 BPM work'}};
+const VELOCORE={1:{mode:'Upright only (no lean — T8)',res:'Level 3–4',prog:'Manual or Scenic',dur:'40 min — 5 warm · 30 steady · 5 cool',rpm:'70–80 RPM',hr:'100–120 BPM'},2:{mode:'Upright, try slight lean if back allows',res:'Level 5–6',prog:'Intervals — 2 min hard / 3 min easy',dur:'40–45 min',rpm:'80–90 RPM work',hr:'120–140 BPM'},3:{mode:'Try full lean — assess T8 first',res:'Level 6–8 work / 3 recovery',prog:'Built-in HIIT',dur:'45 min (Sun 25 min easy)',rpm:'85–95 RPM work',hr:'140–155 BPM work'}};
 
 const WORKOUTS={1:{type:'Bowflex — Push Day',time:'6:15–7:00 AM',ex:[{n:'Chest press',s:'2×10'},{n:'Shoulder press',s:'2×10'},{n:'Tricep pushdown',s:'2×12'},{n:'Lateral raise',s:'2×12'}]},3:{type:'VeloCore Bike',time:'6:00–6:40 AM',bike:true},5:{type:'Bowflex — Pull Day',time:'6:15–7:00 AM',ex:[{n:'Lat pulldown',s:'2×10'},{n:'Seated row',s:'2×10'},{n:'Preacher curl',s:'2×12'},{n:'Rear delt fly',s:'2×12'}]}};
 
 const SCHEDS={0:[{t:'Natural',tx:'Feed dog + breakfast'},{t:'Morning',tx:'Personal time'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],1:[{t:'6:00 AM',tx:'Feed dog'},{t:'6:15 AM',tx:'Bowflex push'},{t:'7:00 AM',tx:'Shower + breakfast'},{t:'8:00 AM',tx:'Work (remote)'},{t:'12:00 PM',tx:'Lunch'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],2:[{t:'6:00 AM',tx:'Feed dog + breakfast'},{t:'7:00 AM',tx:'Depart'},{t:'8:00 AM',tx:'Work'},{t:'12:00 PM',tx:'Lunch'},{t:'4:30 PM',tx:'Depart on time'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],3:[{t:'6:00 AM',tx:'Feed dog + VeloCore'},{t:'6:40 AM',tx:'Shower + breakfast'},{t:'7:00 AM',tx:'Depart'},{t:'8:00 AM',tx:'Work'},{t:'12:00 PM',tx:'Lunch'},{t:'4:30 PM',tx:'Depart on time'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],4:[{t:'6:00 AM',tx:'Feed dog + breakfast'},{t:'7:00 AM',tx:'Depart'},{t:'8:00 AM',tx:'Work'},{t:'12:00 PM',tx:'Lunch'},{t:'4:30 PM',tx:'Depart on time'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],5:[{t:'6:00 AM',tx:'Feed dog'},{t:'6:15 AM',tx:'Bowflex pull'},{t:'7:00 AM',tx:'Shower + breakfast'},{t:'8:00 AM',tx:'Work (remote)'},{t:'12:00 PM',tx:'Lunch'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],6:[{t:'Natural',tx:'Feed dog + breakfast'},{t:'Morning',tx:'Car work / personal'},{t:'Late AM',tx:'Batch cooking'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}]};
 
-const TAPERW=[{start:new Date(2026,4,11),label:'Week 1',title:'Cut one 20oz → water',desc:'2x 20oz + 3x 12oz',mg:'~510mg'},{start:new Date(2026,4,18),label:'Week 2',title:'Cut second 20oz → water',desc:'1x 20oz + 3x 12oz',mg:'~420mg'},{start:new Date(2026,4,25),label:'Week 3',title:'Cut afternoon 12oz → water at lunch',desc:'1x 20oz + 2x 12oz',mg:'~340mg'},{start:new Date(2026,5,1),label:'Week 4',title:'All 20oz gone → 3x 12oz',desc:'3x 12oz cans',mg:'~255mg'},{start:new Date(2026,5,8),label:'Week 5',title:'2x 12oz, nothing after noon',desc:'2x 12oz cans',mg:'~170mg'},{start:new Date(2026,5,15),label:'Week 6',title:'1x 12oz + sparkling water',desc:'1x 12oz + caffeine-free',mg:'~85mg'},{start:new Date(2026,5,29),label:'Done',title:'Maintenance — 1x 12oz morning only',desc:'Water rest of day',mg:'~85mg'}];
+const TAPERW=[{start:new Date(2026,4,11),title:'Cut one 20oz → water',desc:'2x 20oz + 3x 12oz',mg:'~510mg'},{start:new Date(2026,4,18),title:'Cut second 20oz → water',desc:'1x 20oz + 3x 12oz',mg:'~420mg'},{start:new Date(2026,4,25),title:'Cut afternoon 12oz → water at lunch',desc:'1x 20oz + 2x 12oz',mg:'~340mg'},{start:new Date(2026,5,1),title:'All 20oz gone → 3x 12oz',desc:'3x 12oz cans',mg:'~255mg'},{start:new Date(2026,5,8),title:'2x 12oz nothing after noon',desc:'2x 12oz cans',mg:'~170mg'},{start:new Date(2026,5,15),title:'1x 12oz + sparkling water',desc:'1x 12oz + caffeine-free',mg:'~85mg'},{start:new Date(2026,5,29),title:'Maintenance — 1x 12oz morning only',desc:'Water rest of day',mg:'~85mg'}];
 
 let chatHist=[],selFl='',loading=false;
 
-// Storage helpers
-function todayKey(){const n=new Date();return `habits_${n.getFullYear()}_${n.getMonth()}_${n.getDate()}`;}
-function weekKey(offset=0){const n=new Date();n.setDate(n.getDate()+offset);return `habits_${n.getFullYear()}_${n.getMonth()}_${n.getDate()}`;}
-function loadHabits(){try{const d=localStorage.getItem(todayKey());return d?JSON.parse(d):{}}catch{return{}}}
-function saveHabits(h){try{localStorage.setItem(todayKey(),JSON.stringify(h))}catch{}}
+// ── STORAGE ──
+function todayStr(){const n=new Date();return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;}
+function loadHabits(){try{return JSON.parse(localStorage.getItem('habits_'+todayStr()))||{};}catch{return{};}}
+function saveHabits(h){try{localStorage.setItem('habits_'+todayStr(),JSON.stringify(h));}catch{}}
+function saveOuraReading(data){
+  try{
+    const key='oura_'+todayStr();
+    localStorage.setItem(key,JSON.stringify({...data,date:todayStr(),ts:Date.now()}));
+  }catch{}
+}
+function getOuraHistory(days=7){
+  const hist=[];
+  for(let i=0;i<days;i++){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const str=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    try{const v=localStorage.getItem('oura_'+str);if(v)hist.push(JSON.parse(v));}catch{}
+  }
+  return hist;
+}
+function getHabitHistory(days=7){
+  const hist=[];
+  for(let i=0;i<days;i++){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const str=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    try{
+      const v=localStorage.getItem('habits_'+str);
+      if(v){
+        const h=JSON.parse(v);
+        const done=Object.entries(h).filter(([k,v])=>v).map(([k])=>k);
+        hist.push({date:str,day:DAYS[d.getDay()],completed:done,total:8});
+      }
+    }catch{}
+  }
+  return hist;
+}
+function buildContextSummary(){
+  const oh=getOuraHistory(7);
+  const hh=getHabitHistory(7);
+  let ctx='';
+  if(oh.length>0){
+    ctx+='\n\nOURA HISTORY (last '+oh.length+' days):\n';
+    oh.forEach(r=>{ctx+=`${r.date}: readiness=${r.readiness||'?'} sleep=${r.sleepScore||'?'} total=${r.totalSleep||'?'} REM=${r.rem||'?'} HRV=${r.hrv||'?'} feeling=${r.feel||'?'}\n`;});
+  }
+  if(hh.length>0){
+    ctx+='\nHABIT HISTORY (last '+hh.length+' days):\n';
+    hh.forEach(r=>{ctx+=`${r.date} (${r.day}): ${r.completed.length}/${r.total} — ${r.completed.join(', ')||'none'}\n`;});
+  }
+  return ctx;
+}
 
 function getGreeting(){const h=new Date().getHours();if(h<12)return'Good morning.';if(h<17)return'Good afternoon.';if(h<21)return'Good evening.';return'Good night.';}
 function getPhase(){const s=new Date(2026,4,4);const w=Math.floor((new Date()-s)/(7*24*60*60*1000));return w<3?1:w<8?2:3;}
-
+function getWeekNum(){const s=new Date(2026,4,4);const w=Math.floor((new Date()-s)/(7*24*60*60*1000));return Math.max(1,Math.min(8,(w%8)+1));}
 
 function show(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  const idx={today:0,habits:1,oura:2,chat:3,taper:4}[name];
+  const idx={today:0,habits:1,oura:2,meals:3,chat:4,taper:5}[name];
   document.querySelectorAll('.nav').forEach(nav=>{const bs=nav.querySelectorAll('.nav-btn');if(bs[idx])bs[idx].classList.add('active');});
   if(name==='chat')setTimeout(()=>{const m=document.getElementById('chat-msgs');m.scrollTop=m.scrollHeight;document.getElementById('chat-input').focus();},100);
   if(name==='habits')renderHabits();
-  if(name==='oura')setTimeout(fetchOura,300);
+  if(name==='oura'){renderOuraHistory();setTimeout(fetchOura,300);}
+  if(name==='meals')renderMeals();
 }
 
 function toggleSetup(id,btn){
-  const p=document.getElementById('sp-'+id);
-  const open=p.classList.toggle('open');
-  btn.textContent=open?'↑':'Setup ↓';
-  btn.classList.toggle('open',open);
+  const p=document.getElementById('sp-'+id);const open=p.classList.toggle('open');
+  btn.textContent=open?'↑':'Setup ↓';btn.classList.toggle('open',open);
+}
+function togRecipe(id){
+  const p=document.getElementById('rp-'+id);const open=p.classList.toggle('open');
+  const btn=p.previousElementSibling;if(btn&&btn.classList.contains('recipe-toggle'))btn.textContent=open?'Recipe ↑':'Recipe ↓';
 }
 
 function initToday(){
   const now=new Date(),dow=now.getDay();
   document.getElementById('main-greeting').textContent=getGreeting();
   document.getElementById('today-date').textContent=DAYS[dow]+', '+MONTHS[now.getMonth()]+' '+now.getDate();
-  const checkinLabels={0:'Night Check-in',1:'Morning Check-in',2:'Morning Check-in',3:'Afternoon Check-in',4:'Afternoon Check-in',5:'Evening Check-in',6:'Evening Check-in',7:'Evening Check-in',8:'Evening Check-in',9:'Evening Check-in',10:'Evening Check-in',11:'Evening Check-in',12:'Afternoon Check-in',13:'Afternoon Check-in',14:'Afternoon Check-in',15:'Afternoon Check-in',16:'Afternoon Check-in',17:'Evening Check-in',18:'Evening Check-in',19:'Evening Check-in',20:'Evening Check-in',21:'Night Check-in',22:'Night Check-in',23:'Night Check-in'};
-  const ci=document.getElementById('checkin-greeting');if(ci)ci.textContent=checkinLabels[now.getHours()]||'Check-in';
+  const h=now.getHours();
+  const cLabel=h<12?'Morning Check-in':h<17?'Afternoon Check-in':h<21?'Evening Check-in':'Night Check-in';
+  const cEl=document.getElementById('checkin-greeting');if(cEl)cEl.textContent=cLabel;
+  const hEl=document.getElementById('habits-greeting');if(hEl)hEl.textContent=getGreeting();
+
   const tag=document.getElementById('today-tag');
   if(dow===1||dow===5)tag.innerHTML='<span style="width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block"></span> Remote + Bowflex';
   else if(dow===3)tag.innerHTML='<span style="width:6px;height:6px;border-radius:50%;background:#8fa8c8;display:inline-block"></span> Office + VeloCore';
@@ -451,123 +581,88 @@ function initToday(){
 
   const w=WORKOUTS[dow],wc=document.getElementById('today-workout'),bc=document.getElementById('bike-card'),bcon=document.getElementById('bike-content');
   document.getElementById('workout-label').textContent=w&&w.ex?'Today\'s workout — tap Setup for cable positions':w&&w.bike?'Today\'s workout — VeloCore':'Today\'s workout';
-
   if(w&&w.ex){
     bc.style.display='none';
     wc.innerHTML='<div style="font-size:11px;color:var(--text2);margin-bottom:10px">'+w.time+' · '+w.type+'</div>'+
-      w.ex.map((e,i)=>{
-        const steps=(SETUP[e.n]||[]);
-        return '<div style="margin-bottom:6px"><div class="ex-row" style="border-bottom:none;padding:5px 0"><div style="display:flex;align-items:center;gap:6px"><span class="ex-name">'+e.n+'</span><button class="setup-btn" id="sbtn-'+i+'" onclick="toggleSetup('+i+',this)">Setup ↓</button></div><span class="ex-sets">'+e.s+'</span></div><div class="setup-panel" id="sp-'+i+'">'+steps.map((s,si)=>'<div class="setup-step"><span class="snum">'+(si+1)+'.</span><span>'+s+'</span></div>').join('')+'</div></div>';
-      }).join('');
+      w.ex.map((e,i)=>{const steps=(SETUP[e.n]||[]);return '<div style="margin-bottom:6px"><div class="ex-row" style="border-bottom:none;padding:5px 0"><div style="display:flex;align-items:center;gap:6px"><span class="ex-name">'+e.n+'</span><button class="setup-btn" id="sbtn-'+i+'" onclick="toggleSetup('+i+',this)">Setup ↓</button></div><span class="ex-sets">'+e.s+'</span></div><div class="setup-panel" id="sp-'+i+'">'+steps.map((s,si)=>'<div class="setup-step"><span class="snum">'+(si+1)+'.</span><span>'+s+'</span></div>').join('')+'</div></div>';}).join('');
   }else if(w&&w.bike){
-    bc.style.display='block';
-    const p=VELOCORE[getPhase()];
+    bc.style.display='block';const p=VELOCORE[getPhase()];
     wc.innerHTML='<div style="font-size:11px;color:var(--text2);margin-bottom:3px">'+w.time+' · '+w.type+'</div><div style="font-size:10px;color:var(--accent);font-weight:500">Phase '+getPhase()+' settings below</div>';
     bcon.innerHTML=Object.entries({Mode:p.mode,Resistance:p.res,Program:p.prog,Duration:p.dur,'RPM target':p.rpm,'Heart rate':p.hr}).map(([k,v])=>'<div class="bike-row"><span class="bk">'+k+'</span><span class="bv">'+v+'</span></div>').join('');
-  }else{
-    bc.style.display='none';
-    wc.innerHTML='<div style="font-size:12px;color:var(--text2);font-style:italic;font-family:\'DM Serif Display\',Georgia,serif">No structured workout today. The dog walk with Susan still counts — enjoy it.</div>';
-  }
+  }else{bc.style.display='none';wc.innerHTML='<div style="font-size:12px;color:var(--text2);font-style:italic;font-family:\'DM Serif Display\',Georgia,serif">No structured workout today. The dog walk with Susan still counts.</div>';}
   document.getElementById('today-sched').innerHTML=SCHEDS[dow].map(r=>'<div class="tl-row"><div class="tl-dot" style="background:var(--text3)"></div><div class="tl-time">'+r.t+'</div><div class="tl-text">'+r.tx+'</div></div>').join('');
 }
 
-function initHabitsDate(){
-  const now=new Date(),dow=now.getDay();
-  document.getElementById('habits-date').textContent=DAYS[dow]+', '+MONTHS[now.getMonth()]+' '+now.getDate();
-}
+function initHabitsDate(){const now=new Date(),dow=now.getDay();document.getElementById('habits-date').textContent=DAYS[dow]+', '+MONTHS[now.getMonth()]+' '+now.getDate();}
 
 function isHabitScheduled(h){
   const dow=new Date().getDay();
   if(h.days==='all')return true;
-  if(h.id==='workout'){
-    const p=getPhase();
-    if(p===1)return[1,3,5].includes(dow);
-    if(p===2)return[1,3,5,6].includes(dow);
-    return[1,3,5,6,0].includes(dow);
-  }
+  if(h.id==='workout'){const p=getPhase();if(p===1)return[1,3,5].includes(dow);if(p===2)return[1,3,5,6].includes(dow);return[1,3,5,6,0].includes(dow);}
   return h.days.includes(dow);
 }
 
 function renderHabits(){
   initHabitsDate();
-  const saved=loadHabits();
-  const now=new Date();
-  const hour=now.getHours();
-  const isEvening=hour>=20;
-
-  // Evening prompt
-  const ep=document.getElementById('evening-prompt');
-  ep.style.display=isEvening?'block':'none';
-
+  const saved=loadHabits();const now=new Date();const isEvening=now.getHours()>=20;
+  document.getElementById('evening-prompt').style.display=isEvening?'block':'none';
   const scheduled=HABITS.filter(h=>isHabitScheduled(h));
-  const done=scheduled.filter(h=>saved[h.id]).length;
-  const total=scheduled.length;
+  const done=scheduled.filter(h=>saved[h.id]).length;const total=scheduled.length;
   const pct=total>0?Math.round(done/total*100):0;
-
-  // Score ring
   const circ=175.9;
   document.getElementById('score-circle').style.strokeDashoffset=circ-(circ*pct/100);
   document.getElementById('score-text').textContent=done+'/'+total;
   document.getElementById('streak-fill').style.width=pct+'%';
   document.getElementById('streak-label').textContent=done+' of '+total+' habits complete today';
-
-  const msgs=['Keep going — every habit counts','Good start — keep the momentum','Solid day — almost there','Strong day — finish it out','Perfect day — well done'];
-  const mi=Math.min(Math.floor(pct/25),4);
-  document.getElementById('score-msg').textContent=done===0?'Tap each habit as you complete it':msgs[mi];
-
-  // Habit list
-  document.getElementById('habit-list').innerHTML=scheduled.map(h=>{
-    const isDone=!!saved[h.id];
-    return '<div class="habit-item" onclick="toggleHabit(\''+h.id+'\')">'+'<div class="habit-check'+(isDone?' done':'')+'"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0a1628" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'+'<div><div class="habit-label'+(isDone?' done':'')+'">'+h.icon+' '+h.label+'</div><div class="habit-sub">'+h.sub+'</div></div>'+'</div>';
-  }).join('');
-
-  // Week dots
-  const dayNames=['S','M','T','W','T','F','S'];
-  const today=now.getDay();
-  const weekStart=new Date(now);weekStart.setDate(now.getDate()-today);
+  const msgs=['Tap each habit as you complete it','Good start — keep going','Solid progress today','Almost there — finish strong','Perfect day — well done'];
+  document.getElementById('score-msg').textContent=done===0?msgs[0]:msgs[Math.min(Math.floor(pct/25),4)];
+  document.getElementById('habit-list').innerHTML=scheduled.map(h=>{const isDone=!!saved[h.id];return '<div class="habit-item" onclick="toggleHabit(\''+h.id+'\')">'+'<div class="habit-check'+(isDone?' done':'')+'"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0a1628" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'+'<div><div class="habit-label'+(isDone?' done':'')+'">'+h.icon+' '+h.label+'</div><div class="habit-sub">'+h.sub+'</div></div>'+'</div>';}).join('');
+  const dayNames=['S','M','T','W','T','F','S'];const today=now.getDay();
   document.getElementById('week-dots').innerHTML=dayNames.map((d,i)=>{
-    let cls,score='';
-    if(i<today){
-      try{const k=weekKey(i-today);const wd=localStorage.getItem(k);if(wd){const wh=JSON.parse(wd);const wsch=HABITS.filter(h=>h.days==='all'||h.id==='workout');const wdone=wsch.filter(h=>wh[h.id]).length;score=wdone+'/'+wsch.length;cls='wd-done';}else cls='wd-miss';}catch{cls='wd-miss';}
-    }else if(i===today){cls='wd-today';score=done+'/'+total;}
-    else{cls='wd-future';}
-    return '<div class="week-dot '+cls+'" title="'+score+'">'+d+'</div>';
+    let cls;
+    if(i<today){try{const k='habits_';const nd=new Date();nd.setDate(nd.getDate()-(today-i));const str=`${nd.getFullYear()}-${String(nd.getMonth()+1).padStart(2,'0')}-${String(nd.getDate()).padStart(2,'0')}`;const wd=localStorage.getItem(k+str);cls=wd?'wd-done':'wd-miss';}catch{cls='wd-miss';}}
+    else if(i===today)cls='wd-today';else cls='wd-future';
+    return '<div class="week-dot '+cls+'">'+d+'</div>';
   }).join('');
-
   document.getElementById('week-summary').textContent=pct===100?'Perfect day — every habit complete.':done+' of '+total+' habits done. '+(total-done)+' remaining.';
 }
 
-function toggleHabit(id){
-  const saved=loadHabits();
-  saved[id]=!saved[id];
-  saveHabits(saved);
-  renderHabits();
-}
-
-function resetDay(){
-  saveHabits({});
-  renderHabits();
-}
+function toggleHabit(id){const saved=loadHabits();saved[id]=!saved[id];saveHabits(saved);renderHabits();}
+function resetDay(){saveHabits({});renderHabits();}
 
 function startEveningCheckin(){
   const saved=loadHabits();
   const scheduled=HABITS.filter(h=>isHabitScheduled(h));
-  const done=scheduled.filter(h=>saved[h.id]);
-  const missed=scheduled.filter(h=>!saved[h.id]);
-  const summary=`Evening check-in (8pm). Today is ${DAYS[new Date().getDay()]}. Habits completed: ${done.map(h=>h.label).join(', ')||'none'}. Habits missed: ${missed.map(h=>h.label).join(', ')||'none'}. Give me a direct, honest assessment of today. Tell me specifically what I missed and what to do differently tomorrow. No sugarcoating — I asked for straight feedback.`;
-  show('chat');
-  setTimeout(()=>{
-    document.getElementById('chat-input').value=summary;
-    sendChat();
-  },300);
+  const done=scheduled.filter(h=>saved[h.id]);const missed=scheduled.filter(h=>!saved[h.id]);
+  const summary=`Evening check-in (8pm). Today is ${DAYS[new Date().getDay()]}.\nHabits completed: ${done.map(h=>h.label).join(', ')||'none'}.\nHabits missed: ${missed.map(h=>h.label).join(', ')||'none'}.\nGive me a direct honest assessment of today and what to do differently tomorrow.`;
+  show('chat');setTimeout(()=>{document.getElementById('chat-input').value=summary;sendChat();},300);
+}
+
+function renderOuraHistory(){
+  const hist=getOuraHistory(7);
+  if(hist.length===0){document.getElementById('oura-history').innerHTML='<div style="font-size:12px;color:var(--text3);font-style:italic">No history yet — complete your first check-in to start tracking.</div>';return;}
+  document.getElementById('oura-history').innerHTML=hist.map(r=>{
+    const sc=r.sleepScore||0;const cls=sc>=70?'good':sc>=50?'warn':'bad';
+    return '<div class="oura-hist-row"><span class="oh-date">'+r.date.slice(5)+'</span><span class="oh-stats">REM '+r.rem+' · HRV '+r.hrv+' · '+r.feel+'</span><span class="oh-score '+cls+'">'+sc+'</span></div>';
+  }).join('');
+}
+
+function renderMeals(){
+  const wk=getWeekNum();
+  const smoker=SMOKER_ROTATION[(wk-1)%8];
+  const crockpot=CROCKPOT_ROTATION[(wk-1)%8];
+  document.getElementById('meals-week-label').textContent='Week '+wk+' of 8 — rotating plan';
+  document.getElementById('meals-content').innerHTML=
+    '<div class="meal-card-inner"><div class="mc-label">Saturday — Smoker</div><div class="mc-title">'+smoker.title+'</div><div class="mc-sub">'+smoker.detail+'</div><button class="recipe-toggle" onclick="togRecipe(\'sm\')">Recipe ↓</button><div class="recipe-panel" id="rp-sm">'+smoker.steps.map((s,i)=>'<div class="recipe-step"><span class="rs-num">'+(i+1)+'.</span><span>'+s+'</span></div>').join('')+'</div></div>'+
+    '<div class="meal-card-inner"><div class="mc-label">Sunday — Crockpot (set before dog walk)</div><div class="mc-title">'+crockpot.title+'</div><div class="mc-sub">'+crockpot.detail+'</div><button class="recipe-toggle" onclick="togRecipe(\'cp\')">Recipe ↓</button><div class="recipe-panel" id="rp-cp">'+crockpot.steps.map((s,i)=>'<div class="recipe-step"><span class="rs-num">'+(i+1)+'.</span><span>'+s+'</span></div>').join('')+'</div></div>'+
+    '<div class="meal-card-inner"><div class="mc-label">Weeknight dinners</div><div class="mc-sub" style="font-size:12px;color:var(--text2);margin-top:4px">Choose any from the list below. Costco lasagna in freezer as backup — always.</div></div>';
+  document.getElementById('dinners-content').innerHTML=DINNERS.map((d,i)=>'<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:.5px solid rgba(255,255,255,.05)"><div><div style="font-size:13px;color:var(--text);font-weight:500">'+d.name+'</div><div style="font-size:11px;color:var(--text3)">'+d.time+'</div></div></div><button class="recipe-toggle" onclick="togRecipe(\'d'+i+'\')">Recipe ↓</button><div class="recipe-panel" id="rp-d'+i+'">'+d.steps.map((s,si)=>'<div class="recipe-step"><span class="rs-num">'+(si+1)+'.</span><span>'+s+'</span></div>').join('')+'</div></div>').join('');
 }
 
 function initTaper(){
-  const now=new Date();now.setHours(0,0,0,0);
-  let cur=-1;
+  const now=new Date();now.setHours(0,0,0,0);let cur=-1;
   for(let i=0;i<TAPERW.length;i++){const nx=TAPERW[i+1];if(now>=TAPERW[i].start&&(!nx||now<nx.start)){cur=i;break;}if(now>TAPERW[i].start)cur=i;}
-  const tot=(TAPERW[TAPERW.length-1].start-TAPERW[0].start)/86400000;
-  const el=Math.max(0,(now-TAPERW[0].start)/86400000);
+  const tot=(TAPERW[TAPERW.length-1].start-TAPERW[0].start)/86400000;const el=Math.max(0,(now-TAPERW[0].start)/86400000);
   const pct=Math.min(100,Math.round(el/tot*100));
   document.getElementById('taper-bar').style.width=pct+'%';
   document.getElementById('taper-pct').textContent=pct+'% complete';
@@ -579,87 +674,55 @@ function initTaper(){
   }).join('');
 }
 
-function selFeel(btn){
-  document.querySelectorAll('.feel-btn').forEach(b=>{b.style.color='';b.style.borderColor='';b.style.background='';});
-  btn.style.color='var(--accent)';btn.style.borderColor='var(--accent)';btn.style.background='rgba(31,212,138,.1)';
-  selFl=btn.dataset.val;chkReady();
-}
-function chkReady(){const h=document.getElementById('readiness').value||document.getElementById('sleep-score').value||selFl;document.getElementById('checkin-btn').disabled=!h;}
-document.querySelectorAll('#screen-oura input').forEach(i=>i.addEventListener('input',chkReady));
-
 async function fetchOura(){
-  const btn=document.getElementById('fetch-oura-btn');
-  const status=document.getElementById('oura-fetch-status');
-  btn.disabled=true;btn.textContent='Fetching from Oura...';
-  status.style.display='block';status.textContent='Connecting to Oura Ring...';
-  const today=new Date();
-  const end=today.toISOString().split('T')[0];
-  const start=new Date(today-3*24*60*60*1000).toISOString().split('T')[0];
+  const btn=document.getElementById('fetch-oura-btn');const status=document.getElementById('oura-fetch-status');
+  btn.disabled=true;btn.textContent='Fetching from Oura...';status.style.display='block';status.textContent='Connecting to Oura Ring...';
+  const today=new Date();const end=today.toISOString().split('T')[0];const start=new Date(today-3*24*60*60*1000).toISOString().split('T')[0];
   try{
-    const [sleepRes,readinessRes]=await Promise.all([
-      fetch(`/.netlify/functions/chat?endpoint=daily_sleep&start_date=${start}&end_date=${end}`),
-      fetch(`/.netlify/functions/chat?endpoint=daily_readiness&start_date=${start}&end_date=${end}`)
-    ]);
+    const [sleepRes,readinessRes]=await Promise.all([fetch(`/.netlify/functions/chat?endpoint=daily_sleep&start_date=${start}&end_date=${end}`),fetch(`/.netlify/functions/chat?endpoint=daily_readiness&start_date=${start}&end_date=${end}`)]);
     const [sleepData,readinessData]=await Promise.all([sleepRes.json(),readinessRes.json()]);
-
-    // Also fetch detailed sleep for HRV and REM
     const detailRes=await fetch(`/.netlify/functions/chat?endpoint=sleep&start_date=${start}&end_date=${end}`);
     const detailData=await detailRes.json();
-
-    // Get most recent entries
     const sleep=sleepData.data&&sleepData.data.length>0?sleepData.data[sleepData.data.length-1]:null;
     const readiness=readinessData.data&&readinessData.data.length>0?readinessData.data[readinessData.data.length-1]:null;
     const detail=detailData.data&&detailData.data.length>0?detailData.data[detailData.data.length-1]:null;
-
-    if(sleep){
-      document.getElementById('sleep-score').value=sleep.score||'';
-      // Convert seconds to hours and minutes
-      if(detail){
-        const totalSec=detail.total_sleep_duration||0;
-        const hrs=Math.floor(totalSec/3600);
-        const mins=Math.floor((totalSec%3600)/60);
-        document.getElementById('sleep-total').value=hrs+'h '+mins+'m';
-        const remSec=detail.rem_sleep_duration||0;
-        const remMins=Math.floor(remSec/60);
-        document.getElementById('rem').value=remMins+'m';
-        if(detail.average_hrv)document.getElementById('hrv').value=Math.round(detail.average_hrv);
-        if(detail.average_heart_rate)document.getElementById('rhr').value=Math.round(detail.average_heart_rate);
-      }
+    if(sleep){document.getElementById('sleep-score').value=sleep.score||'';}
+    if(readiness){document.getElementById('readiness').value=readiness.score||'';}
+    if(detail){
+      const ts=detail.total_sleep_duration||0;document.getElementById('sleep-total').value=Math.floor(ts/3600)+'h '+Math.floor((ts%3600)/60)+'m';
+      const rs=detail.rem_sleep_duration||0;document.getElementById('rem').value=Math.floor(rs/60)+'m';
+      if(detail.average_hrv)document.getElementById('hrv').value=Math.round(detail.average_hrv);
+      if(detail.average_heart_rate)document.getElementById('rhr').value=Math.round(detail.average_heart_rate);
     }
-    if(readiness){
-      document.getElementById('readiness').value=readiness.score||'';
-    }
-
-    status.style.color='var(--accent)';
-    status.textContent='Oura data loaded — review and tap Get Assessment';
+    status.style.color='var(--accent)';status.textContent='Oura data loaded — review and tap Get Assessment';
     chkReady();
-  }catch(e){
-    status.style.color='var(--danger)';
-    status.textContent='Could not reach Oura — enter data manually below';
-  }
+  }catch(e){status.style.color='var(--danger)';status.textContent='Could not reach Oura — enter data manually below';}
   btn.disabled=false;btn.textContent='Refresh Oura data ↓';
 }
+
+function selFeel(btn){document.querySelectorAll('.feel-btn').forEach(b=>{b.style.color='';b.style.borderColor='';b.style.background='';});btn.style.color='var(--accent)';btn.style.borderColor='var(--accent)';btn.style.background='rgba(31,212,138,.1)';selFl=btn.dataset.val;chkReady();}
+function chkReady(){const h=document.getElementById('readiness').value||document.getElementById('sleep-score').value||selFl;document.getElementById('checkin-btn').disabled=!h;}
+document.querySelectorAll('#screen-oura input').forEach(i=>i.addEventListener('input',chkReady));
 
 async function submitCheckin(){
   const r=document.getElementById('readiness').value,ss=document.getElementById('sleep-score').value,st=document.getElementById('sleep-total').value,rem=document.getElementById('rem').value,hrv=document.getElementById('hrv').value,rhr=document.getElementById('rhr').value;
   const btn=document.getElementById('checkin-btn');btn.disabled=true;btn.textContent='Kevin is thinking...';
-  const dow=new Date().getDay();
-  const msg=`Morning check-in. Oura: readiness ${r||'?'}, sleep score ${ss||'?'}, total sleep ${st||'?'}, REM ${rem||'?'}, HRV ${hrv||'?'}, resting HR ${rhr||'?'}. Feeling: ${selFl||'not stated'}. Today is ${DAYS[dow]}, Phase ${getPhase()}. Give a 3-4 sentence honest assessment and how hard to push today.`;
+  // Save to persistent storage
+  saveOuraReading({readiness:r,sleepScore:ss,totalSleep:st,rem,hrv,rhr,feel:selFl});
+  const dow=new Date().getDay();const ctx=buildContextSummary();
+  const msg=`Morning check-in. Today is ${DAYS[dow]}, Phase ${getPhase()}.\nOura: readiness=${r||'?'} sleep=${ss||'?'} total=${st||'?'} REM=${rem||'?'} HRV=${hrv||'?'} HR=${rhr||'?'}.\nFeeling: ${selFl||'not stated'}.${ctx}\nGive a 3-4 sentence honest assessment including any trends you notice, and how hard to push today.`;
   try{
     const res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SP,messages:[{role:'user',content:msg}]})});
-    const data=await res.json();
-    const reply=data.content?.find(b=>b.type==='text')?.text||'Unable to get response.';
+    const data=await res.json();const reply=data.content?.find(b=>b.type==='text')?.text||(data.error?'Error: '+data.error:'Something went wrong.');
     const metrics=[];
     if(r)metrics.push({l:'Readiness',v:r,c:r>=70?'good':r>=50?'warn':'bad'});
     if(ss)metrics.push({l:'Sleep score',v:ss,c:ss>=70?'good':ss>=50?'warn':'bad'});
-    if(st)metrics.push({l:'Total sleep',v:st,c:''});
-    if(rem)metrics.push({l:'REM',v:rem,c:''});
-    if(hrv)metrics.push({l:'HRV',v:hrv,c:''});
-    if(rhr)metrics.push({l:'Resting HR',v:rhr,c:''});
-    if(selFl)metrics.push({l:'Feeling',v:selFl,c:''});
+    if(st)metrics.push({l:'Total sleep',v:st,c:''});if(rem)metrics.push({l:'REM',v:rem,c:''});
+    if(hrv)metrics.push({l:'HRV',v:hrv,c:''});if(rhr)metrics.push({l:'Resting HR',v:rhr,c:''});if(selFl)metrics.push({l:'Feeling',v:selFl,c:''});
     document.getElementById('checkin-metrics').innerHTML=metrics.map(m=>'<div class="metric-row"><span class="mlabel">'+m.l+'</span><span class="mval '+m.c+'">'+m.v+'</span></div>').join('');
     document.getElementById('checkin-resp').textContent=reply;
     document.getElementById('checkin-result').style.display='block';
+    renderOuraHistory();
     chatHist.push({role:'user',content:msg});chatHist.push({role:'assistant',content:reply});
   }catch(e){document.getElementById('checkin-resp').textContent='Connection error.';document.getElementById('checkin-result').style.display='block';}
   btn.disabled=false;btn.textContent="Get Kevin's Assessment";
@@ -670,8 +733,7 @@ function hkey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();
 function sq(t){document.getElementById('chat-input').value=t;sendChat();}
 
 function addMsg(role,content){
-  const m=document.getElementById('chat-msgs');
-  const d=document.createElement('div');d.className='msg '+role;
+  const m=document.getElementById('chat-msgs');const d=document.createElement('div');d.className='msg '+role;
   d.innerHTML='<div class="mavatar">'+(role==='assistant'?'K':'DM')+'</div><div class="mbubble">'+content.replace(/</g,'&lt;').replace(/\n/g,'<br>')+'</div>';
   m.appendChild(d);m.scrollTop=m.scrollHeight;
 }
@@ -684,12 +746,14 @@ async function sendChat(){
   loading=true;inp.value='';inp.style.height='auto';document.getElementById('send-btn').disabled=true;
   addMsg('user',text);
   const now=new Date();
-  const dateCtx=`[Context: Today is ${DAYS[now.getDay()]}, ${MONTHS[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}. Time: ${now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true})}. Phase ${getPhase()} of the workout plan.]`;
-  const messagesWithDate=[...chatHist.slice(0,-1),{role:'user',content:dateCtx+'\n\n'+text}];
+  const ctx=buildContextSummary();
+  const dateCtx=`[Today: ${DAYS[now.getDay()]} ${MONTHS[now.getMonth()]} ${now.getDate()} ${now.getFullYear()} ${now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true})} Phase ${getPhase()}${ctx}]`;
+  const msgWithCtx=dateCtx+'\n\n'+text;
+  const messagesForApi=[...chatHist,{role:'user',content:msgWithCtx}];
   chatHist.push({role:'user',content:text});
   addTyping();
   try{
-    const res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SP,messages:messagesWithDate})});
+    const res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SP,messages:messagesForApi})});
     const data=await res.json();
     const reply=data.content?.find(b=>b.type==='text')?.text||(data.error?'Error: '+data.error:'Something went wrong.');
     rmTyping();addMsg('assistant',reply);chatHist.push({role:'assistant',content:reply});
@@ -698,8 +762,6 @@ async function sendChat(){
 }
 
 initToday();initTaper();renderHabits();
-
-// Check for evening prompt every minute
 setInterval(()=>{if(document.getElementById('screen-habits').classList.contains('active'))renderHabits();},60000);
 </script>
 </body>
