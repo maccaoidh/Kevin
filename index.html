@@ -677,10 +677,14 @@ async function sendChat(){
   const inp=document.getElementById('chat-input');const text=inp.value.trim();
   if(!text||loading)return;
   loading=true;inp.value='';inp.style.height='auto';document.getElementById('send-btn').disabled=true;
-  addMsg('user',text);chatHist.push({role:'user',content:text});
+  addMsg('user',text);
+  const now=new Date();
+  const dateCtx=`[Context: Today is ${DAYS[now.getDay()]}, ${MONTHS[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}. Time: ${now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true})}. Phase ${getPhase()} of the workout plan.]`;
+  const messagesWithDate=[...chatHist.slice(0,-1),{role:'user',content:dateCtx+'\n\n'+text}];
+  chatHist.push({role:'user',content:text});
   addTyping();
   try{
-    const res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SP,messages:chatHist})});
+    const res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SP,messages:messagesWithDate})});
     const data=await res.json();
     const reply=data.content?.find(b=>b.type==='text')?.text||(data.error?'Error: '+data.error:'Something went wrong.');
     rmTyping();addMsg('assistant',reply);chatHist.push({role:'assistant',content:reply});
