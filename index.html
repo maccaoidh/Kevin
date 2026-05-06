@@ -200,7 +200,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="clabel">Daily reminders</div>
       <div class="tl-row"><div class="tl-dot" style="background:#ffa94d"></div><div class="tl-time">All day</div><div class="tl-text">No Mountain Dew after 4:00 PM</div></div>
       <div class="tl-row"><div class="tl-dot" style="background:#1fd48a"></div><div class="tl-time">Lunch</div><div class="tl-text">Eat something — don't skip</div></div>
-      <div class="tl-row"><div class="tl-dot" style="background:#8fa8c8"></div><div class="tl-time">8:00 PM</div><div class="tl-text">Open Kevin — log your day + reading</div></div>
+      <div class="tl-row"><div class="tl-dot" style="background:#8fa8c8"></div><div class="tl-time">8:00 PM</div><div class="tl-text">Open Kevin + CIO podcast (screen-free)</div></div>
       <div class="tl-row"><div class="tl-dot" style="background:#4a6080"></div><div class="tl-time">9:00 PM</div><div class="tl-text">Gaming cutoff — wind down</div></div>
       <div class="tl-row"><div class="tl-dot" style="background:#4a6080"></div><div class="tl-time">10:30 PM</div><div class="tl-text">Lights out — protect your REM</div></div>
     </div>
@@ -242,7 +242,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     </div>
     <div id="evening-prompt" class="evening-prompt" style="display:none">
       <div style="font-family:'DM Serif Display',Georgia,serif;font-size:16px;color:var(--text);margin-bottom:4px">Evening check-in</div>
-      <div style="font-size:12px;color:var(--text2)">It's 8pm — time to log your day and start your reading hour.</div>
+      <div style="font-size:12px;color:var(--text2)">It's 8pm — time to log your day and start your CIO podcast.</div>
       <button class="sbtn" style="margin-top:10px;padding:10px" onclick="startEveningCheckin()">Log today with Kevin ↗</button>
     </div>
     <div class="card"><div class="clabel">Tap to mark complete</div><div id="habit-list"></div></div>
@@ -456,12 +456,14 @@ T8: Do everything slow down when aches. Aching reduce 20% continue. Sharp pain s
 
 SCHEDULE: Remote Mon/Fri Bowflex. Office Tue-Thu. Wed bike only. Wife Susan daughters Kathryn and CJ dog. Dog walk Susan 5:30-6:15pm daily keystone habit.
 
-HABITS: workout(scheduled days) breakfast lunch dog-walk water-64oz no-mtn-dew-after-4pm reading lights-out-10:30.
+HABITS: workout(scheduled days) breakfast lunch dog-walk water-64oz no-mtn-dew-after-4pm podcast/reading lights-out-10:30.
 
 TAPER: 630mg to 85mg 8 weeks. Nothing after 4pm ever.
 NUTRITION: No pork no fish. Mild flavors. Smoker Sat chickens or beef. Crockpot Sun before dog walk. Susan makes pot roast. Costco lasagna in freezer always. Protein breakfast 400+ cal lunch 64oz water.
 SLEEP TARGET: 7+ hrs 90 min REM. Oura ring.
-READING: 1hr 8pm nightly. Atomic Habits May 25 next.
+EVENING SCHEDULE (8:00-9:30pm): CIO Leadership Live and CIO In The Know podcasts on Spotify. Screen-free — phone face down earbuds in lights low. Until May 25 full 90 min podcast. After May 25 when Atomic Habits starts: 8:00-8:45pm reading then 8:45-9:30pm podcast.
+LUNCH SCHEDULE (12:00-12:30pm weekdays): COBIT 2019 Foundation study on Udemy. Working toward COBIT 2019 Foundation exam. Study plan: wks 1-2 Framework and Principles, wks 3-4 Governance System and Components (30% of exam — biggest section), wks 5-6 Governance and Management Objectives (23%), wk 7 Performance and Implementation, wk 8+ Udemy practice exams (450 questions 6 tests). Book exam when scoring 70%+ on practice tests consistently.
+CIO GOAL: Long-term goal is CIO role. COBIT 2019 is a key stepping stone credential. Evening podcasts build executive mindset and vocabulary. Reading list also feeds this goal.
 COACHING: Straight talk path forward always. Celebrate wins. Escalate if missed multiple days.
 When given Oura history or habit history analyze trends and give specific actionable feedback.`;
 
@@ -516,7 +518,7 @@ const HABITS=[
   {id:'walk',label:'Dog walk with Susan',sub:'5:30–6:15 PM — every day',icon:'🐕',days:'all'},
   {id:'water',label:'64oz water',sub:'16oz with each meal + workout bottle',icon:'💧',days:'all'},
   {id:'taper',label:'No Mtn Dew after 4pm',sub:'Caffeine cutoff — non-negotiable',icon:'🥤',days:'all'},
-  {id:'reading',label:'IT leadership reading',sub:'1 hour at 8:00 PM',icon:'📖',days:'all'},
+  {id:'reading',label:'CIO podcast (screen-free)',sub:'8:00–9:30 PM — Spotify, phone face down',icon:'🎧',days:'all'},
   {id:'sleep',label:'Lights out by 10:30',sub:'Protect your REM',icon:'🌙',days:'all'}
 ];
 
@@ -535,7 +537,7 @@ const VELOCORE={1:{mode:'Upright only (no lean — T8)',res:'Level 3–4',prog:'
 
 const WORKOUTS={1:{type:'Bowflex — Push Day',time:'6:15–7:00 AM',ex:[{n:'Chest press',s:'2×10'},{n:'Shoulder press',s:'2×10'},{n:'Tricep pushdown',s:'2×12'},{n:'Lateral raise',s:'2×12'}]},3:{type:'VeloCore Bike',time:'6:00–6:40 AM',bike:true},5:{type:'Bowflex — Pull Day',time:'6:15–7:00 AM',ex:[{n:'Lat pulldown',s:'2×10'},{n:'Seated row',s:'2×10'},{n:'Preacher curl',s:'2×12'},{n:'Rear delt fly',s:'2×12'}]}};
 
-const SCHEDS={0:[{t:'Natural',tx:'Feed dog + breakfast'},{t:'Morning',tx:'Personal time'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],1:[{t:'6:00 AM',tx:'Feed dog'},{t:'6:15 AM',tx:'Bowflex push'},{t:'7:00 AM',tx:'Shower + breakfast'},{t:'8:00 AM',tx:'Work (remote)'},{t:'12:00 PM',tx:'Lunch'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],2:[{t:'6:00 AM',tx:'Feed dog + breakfast'},{t:'7:00 AM',tx:'Depart'},{t:'8:00 AM',tx:'Work'},{t:'12:00 PM',tx:'Lunch'},{t:'4:30 PM',tx:'Depart on time'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],3:[{t:'6:00 AM',tx:'Feed dog + VeloCore'},{t:'6:40 AM',tx:'Shower + breakfast'},{t:'7:00 AM',tx:'Depart'},{t:'8:00 AM',tx:'Work'},{t:'12:00 PM',tx:'Lunch'},{t:'4:30 PM',tx:'Depart on time'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],4:[{t:'6:00 AM',tx:'Feed dog + breakfast'},{t:'7:00 AM',tx:'Depart'},{t:'8:00 AM',tx:'Work'},{t:'12:00 PM',tx:'Lunch'},{t:'4:30 PM',tx:'Depart on time'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],5:[{t:'6:00 AM',tx:'Feed dog'},{t:'6:15 AM',tx:'Bowflex pull'},{t:'7:00 AM',tx:'Shower + breakfast'},{t:'8:00 AM',tx:'Work (remote)'},{t:'12:00 PM',tx:'Lunch'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}],6:[{t:'Natural',tx:'Feed dog + breakfast'},{t:'Morning',tx:'Car work / personal'},{t:'Late AM',tx:'Batch cooking'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'Open Kevin + reading'}]};
+const SCHEDS={0:[{t:'Natural',tx:'Feed dog + breakfast'},{t:'Morning',tx:'Personal time'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'CIO podcast + Kevin log'}],1:[{t:'6:00 AM',tx:'Feed dog'},{t:'6:15 AM',tx:'Bowflex push'},{t:'7:00 AM',tx:'Shower + breakfast'},{t:'8:00 AM',tx:'Work (remote)'},{t:'12:00 PM',tx:'Lunch + COBIT study (Udemy)'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'CIO podcast + Kevin log'}],2:[{t:'6:00 AM',tx:'Feed dog + breakfast'},{t:'7:00 AM',tx:'Depart'},{t:'8:00 AM',tx:'Work'},{t:'12:00 PM',tx:'Lunch + COBIT study (Udemy)'},{t:'4:30 PM',tx:'Depart on time'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'CIO podcast + Kevin log'}],3:[{t:'6:00 AM',tx:'Feed dog + VeloCore'},{t:'6:40 AM',tx:'Shower + breakfast'},{t:'7:00 AM',tx:'Depart'},{t:'8:00 AM',tx:'Work'},{t:'12:00 PM',tx:'Lunch + COBIT study (Udemy)'},{t:'4:30 PM',tx:'Depart on time'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'CIO podcast + Kevin log'}],4:[{t:'6:00 AM',tx:'Feed dog + breakfast'},{t:'7:00 AM',tx:'Depart'},{t:'8:00 AM',tx:'Work'},{t:'12:00 PM',tx:'Lunch + COBIT study (Udemy)'},{t:'4:30 PM',tx:'Depart on time'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'CIO podcast + Kevin log'}],5:[{t:'6:00 AM',tx:'Feed dog'},{t:'6:15 AM',tx:'Bowflex pull'},{t:'7:00 AM',tx:'Shower + breakfast'},{t:'8:00 AM',tx:'Work (remote)'},{t:'12:00 PM',tx:'Lunch + COBIT study (Udemy)'},{t:'5:00 PM',tx:'Feed dog dinner'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'CIO podcast + Kevin log'}],6:[{t:'Natural',tx:'Feed dog + breakfast'},{t:'Morning',tx:'Car work / personal'},{t:'Late AM',tx:'Batch cooking'},{t:'5:30 PM',tx:'Dog walk with Susan'},{t:'8:00 PM',tx:'CIO podcast + Kevin log'}]};
 
 const TAPERW=[{start:new Date(2026,4,11),title:'Cut one 20oz → water',desc:'2x 20oz + 3x 12oz',mg:'~510mg'},{start:new Date(2026,4,18),title:'Cut second 20oz → water',desc:'1x 20oz + 3x 12oz',mg:'~420mg'},{start:new Date(2026,4,25),title:'Cut afternoon 12oz → water at lunch',desc:'1x 20oz + 2x 12oz',mg:'~340mg'},{start:new Date(2026,5,1),title:'All 20oz gone → 3x 12oz',desc:'3x 12oz cans',mg:'~255mg'},{start:new Date(2026,5,8),title:'2x 12oz nothing after noon',desc:'2x 12oz cans',mg:'~170mg'},{start:new Date(2026,5,15),title:'1x 12oz + sparkling water',desc:'1x 12oz + caffeine-free',mg:'~85mg'},{start:new Date(2026,5,29),title:'Maintenance — 1x 12oz morning only',desc:'Water rest of day',mg:'~85mg'}];
 
